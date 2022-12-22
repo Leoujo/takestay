@@ -1,7 +1,8 @@
 from ninja import NinjaAPI, Schema, ModelSchema
-from .models import Coffeeshop
+from .models import Coffeeshop, Category
 from django.shortcuts import get_object_or_404
 from django.forms.models import model_to_dict
+from typing import List
 
 api = NinjaAPI()
 
@@ -11,32 +12,48 @@ class CoffeeshopSchema(ModelSchema):
         model = Coffeeshop
         model_fields = "__all__"
 
-# COFFEESHOPS
-# Post a coffeeshop
 
+class CategoriesSchema(ModelSchema):
+    class Config:
+        model = Category
+        model_fields = "__all__"
+
+
+# @api.post("/", response=CoffeeshopSchema)
+# def createSingleCoffeeshop(request, coffeeshop: CoffeeshopSchema):
+#     c1 = coffeeshop.dict()
+#     coffeeshop = Coffeeshop(**c1)
+#     coffeeshop.save()
+#     return coffeeshop
 
 @api.post("/", response=CoffeeshopSchema)
-def createSingleCoffeeshop(request, coffeeshop: CoffeeshopSchema):
-    c1 = coffeeshop.dict()
-    coffeeshop = Coffeeshop(**c1)
-    coffeeshop.save()
-    return coffeeshop
+def postSingleCoffeeshop(request, data: CoffeeshopSchema):
+    #  dict() transforma o json em um dicionário
+    # O ** faz com que vc não precise escrever item por item "(name="leozin", categories:[])"
+    d1 = data.dict()
+    new_coffeeshop = Coffeeshop.objects.create(name=d1["name"], logo_url=d1["logo_url"])
+
+    return new_coffeeshop
 
 
 # Get all the coffeeshops
-@api.get("/")
-def getAllCoffeeshops(request):
+@ api.get("/", response=List[CoffeeshopSchema])
+def get_all_coffeeshops(request):
     coffeeshops = Coffeeshop.objects.all()
-    response = [{'id': i.id, 'name': i.name} for i in coffeeshops]
-    return response
+    return coffeeshops
 
 
 # Get one coffeeshop by id
-@api.get("/{id}")
-def getSingleCoffeeshop(request, id):
-    coffeeshop = get_object_or_404(Coffeeshop, id=id)
-    return model_to_dict(coffeeshop)
+@ api.get("/{id}", response=CoffeeshopSchema)
+def get_single_coffeeshop(request, id):
+    coffeeshop = Coffeeshop.objects.get(id=id)
+    return coffeeshop
 
 
 # CATEGORY - create and delete (both one)
+# @api.get("/categories/", response=List[CategoriesSchema])
+# def getAllCategories(request):
+#     categories = Category.objects.all()
+#     return categories
+
 # ITEM - create and delete (both one)
