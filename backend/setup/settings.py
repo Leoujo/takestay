@@ -21,7 +21,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'coffeeshop',
+    'authuser'
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
