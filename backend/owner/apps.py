@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AuthuserConfig(AppConfig):
+class OwnerConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'authuser'
+    name = 'owner'

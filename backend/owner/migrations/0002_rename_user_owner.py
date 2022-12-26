@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('coffeeshop', '0015_alter_coffeeshop_categories'),
-        ('authuser', '0001_initial'),
+        ('owner', '0001_initial'),
     ]
 
     operations = [

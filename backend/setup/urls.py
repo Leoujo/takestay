@@ -1,10 +1,11 @@
 
 from django.contrib import admin
-from django.urls import path, include
-from coffeeshop import urls
+from django.urls import path
+
+from .api import api
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include(urls)),
+    path("api/", api.urls)
 ]
