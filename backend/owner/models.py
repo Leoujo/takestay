@@ -10,7 +10,7 @@ class Owner(models.Model):
     password = models.CharField(max_length=200)
     email = models.EmailField()
     coffeeshop_owned = models.OneToOneField(
-        Coffeeshop, on_delete=models.CASCADE)
+        Coffeeshop, on_delete=models.CASCADE, null=True)
 
    #  Encrypt password
     def save(self, *args, **kwargs):
