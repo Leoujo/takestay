@@ -12,7 +12,7 @@ const getOne = async (creatorId: string) => {
 };
 
 const getAll = async () => {
-  const response = await Api.get(`/coffeeshop`);
+  const response = await Api.get(`/coffeeshops/`);
   return response.data;
 };
 // Categories

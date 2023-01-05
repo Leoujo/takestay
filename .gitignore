@@ -1,2 +1,33 @@
+# FRONTEND
 # Dependencies
 node_modules/
+
+# BACKEND
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Django Ninja stuff:
+*.env
+node_modules/
+
+# SQLite database file
+db.sqlite3
+
+# Django static files
+staticfiles/
+
+# Collected static files
+collectedstatic/
+
+# Media files
+media/
