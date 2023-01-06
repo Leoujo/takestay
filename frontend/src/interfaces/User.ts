@@ -5,6 +5,6 @@ export interface LoginUser {
 
 export interface User {
   name: string;
-  surname: string;
+  surname?: string;
   email: string;
 }

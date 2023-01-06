@@ -38,9 +38,12 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+# CORS CONFIG
 CORS_ORIGIN_WHITELIST = [
-   'http://localhost:3000',
+    'http://localhost:3000',
 ]
+CORS_ALLOW_METHODS = ['GET', 'POST']
+CORS_ALLOW_HEADERS = ['Content-Type']
 
 
 ROOT_URLCONF = 'setup.urls'

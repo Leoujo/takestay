@@ -99,13 +99,11 @@ export const AuthDialog = () => {
             {type === CREATEACCOUNT && (
               <>
                 <AuthTextField label="Name" register={register} errors={errors.name} />
-                <AuthTextField label="Surname" register={register} errors={errors.surname} />
               </>
             )}
             <AuthTextField label="Email" register={register} errors={errors.email} />
             <AuthTextField label="Password" register={register} errors={errors.password} />
 
-            {type === CREATEACCOUNT && <AuthTextField label="ConfirmPassword" register={register} errors={errors.confirmpassword} />}
             <Box marginTop="10px">{isError && <Alert severity="error">{String(errorMessage)}</Alert>}</Box>
 
             <Box margin="30px 0px 0px 0px">
