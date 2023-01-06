@@ -10,7 +10,7 @@ const initialState: CoffeeshopState = {
   message: "",
 };
 
-export const getUserCoffeeshop = createAsyncThunk("coffeeshop/getUserCoffeeshop", async (creatorId: string, thunkAPI) => {
+export const getUserCoffeeshop = createAsyncThunk("coffeeshop/getUserCoffeeshop", async (creatorId: number, thunkAPI) => {
   try {
     return await coffeeshopService.getOne(creatorId);
   } catch (error) {

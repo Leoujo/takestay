@@ -9,7 +9,7 @@ export interface CoffeeshopState {
 export interface Coffeeshop {
   name: string;
   file?: string;
-  creatorId: string;
+  creatorId?: string;
   id?: string;
   categories: Categories[];
 }

@@ -1,24 +1,17 @@
 import { Container, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { User } from "../../interfaces/User";
+import { RootState } from "../../redux/store";
 
 interface ProfileCardProps {
   coffeeshopName: string;
 }
 
 export const ProfileCard: React.FC<ProfileCardProps> = ({ coffeeshopName }) => {
-  const [userData, setUserData] = useState<User>();
+  const { userData } = useSelector((state: RootState) => state.user);
 
-  useEffect(() => {
-    getUserData();
-  }, []);
-
-  const getUserData = () => {
-    let userDataString = localStorage.getItem("userData") || "";
-    let userDataJson = JSON.parse(userDataString);
-    setUserData(userDataJson);
-  };
   return (
     <Paper>
       <Box display="flex" padding="10px">
@@ -27,8 +20,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ coffeeshopName }) => {
           <Typography variant="h5" color="primary.main" fontWeight="bold">
             {`${coffeeshopName}`}
           </Typography>
-          <Typography variant="subtitle2" color="#c8c8c8" >
-            {`Created by ${userData?.name} ${userData?.surname}`}
+          <Typography variant="subtitle2" color="#c8c8c8">
+            {`Created by ${userData?.name}`}
           </Typography>
         </Container>
       </Box>

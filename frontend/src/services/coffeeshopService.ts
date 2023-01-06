@@ -6,8 +6,8 @@ const register = async (coffeeshopData: Coffeeshop) => {
   return response.data;
 };
 
-const getOne = async (creatorId: string) => {
-  const response = await Api.get(`/coffeeshop/${creatorId}`);
+const getOne = async (creatorId: number) => {
+  const response = await Api.get(`/coffeeshops/${creatorId}`);
   return response.data;
 };
 

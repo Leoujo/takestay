@@ -9,7 +9,7 @@ router = Router()
 class OwnerSchema(ModelSchema):
     class Config:
         model = Owner
-        model_fields = ["name", "email", "coffeeshop_owned"]
+        model_fields = ["id", "name", "email", "coffeeshop_owned"]
 
 
 class OwnerSchemaCreation(ModelSchema):
@@ -21,7 +21,7 @@ class OwnerSchemaCreation(ModelSchema):
 class OwnerSchemaLogin(ModelSchema):
     class Config:
         model = Owner
-        model_fields = ["password", "email"]
+        model_fields = ["id", "password", "email"]
 
 
 @router.get("/", response=list[OwnerSchema])
@@ -30,7 +30,7 @@ def get_owners(request):
     return owners
 
 
-@router.post("/", response=OwnerSchemaCreation)
+@router.post("/", response=OwnerSchema)
 def post_owner(request, data: OwnerSchemaCreation):
     d1 = data.dict()
     new_owner = Owner.objects.create(
@@ -38,9 +38,8 @@ def post_owner(request, data: OwnerSchemaCreation):
     return new_owner
 
 
-@router.post("/login", response=OwnerSchemaLogin)
+@router.post("/login", response=OwnerSchema)
 def login_owner(request, data: OwnerSchemaLogin):
     d1 = data.dict()
     owner = get_object_or_404(Owner, email=d1["email"])
     return owner
-
