@@ -2,22 +2,20 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Container } from "../../common/styles";
 import Logo from "../../assets/brand/logo-round.png";
-import { Background } from "./styles";
+import { Background, SplashText } from "./styles";
 import messages from "../../messages";
+import { GoogleAuthButton } from "./components/GoogleAuthButton";
 
 export const Login = () => {
   return (
     <Background>
-      <Container justifyContent="space-between">
+      <Container>
         <Box component="img" src={Logo} />
         <Box>
-          <Typography variant="h3" textAlign="center" color="white">
-            {messages.brand}
-          </Typography>
-          <Typography variant="h5" textAlign="center" color="white">
-            {messages.welcome}
-          </Typography>
+          <SplashText variant="h2">{messages.brand}</SplashText>
+          <SplashText variant="h5">{messages.welcome}</SplashText>
         </Box>
+        <GoogleAuthButton />
       </Container>
     </Background>
   );

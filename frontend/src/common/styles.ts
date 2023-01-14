@@ -1,15 +1,11 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
 
-interface ContainerProps {
-  justifyContent?: "space-between"  ;
-}
-
-export const Container = styled(Box)<ContainerProps>`
+export const Container = styled(Box)`
   display: flex;
   flex-direction: column;
-  justify-content: ${(props) => (props.justifyContent ? props.justifyContent : "center")};
+  justify-content: space-between;
   align-items: center;
-  height: 100%;
-  padding: 2em;
+  padding: 2em 1em;
+  height: -webkit-fill-available;
 `;
