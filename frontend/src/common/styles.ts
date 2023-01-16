@@ -4,8 +4,8 @@ import { Box } from "@mui/system";
 export const Container = styled(Box)`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 2em 1em;
-  height: -webkit-fill-available;
+  padding: 1em;
+  height: 80%;
 `;
