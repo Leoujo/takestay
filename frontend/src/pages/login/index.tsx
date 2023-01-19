@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
-import { Container } from "../../common/styles";
+import { Background, Container } from "../../common/styles";
 import Logo from "../../assets/brand/logo-round.png";
-import { Background, SplashText } from "./styles";
+import { SplashText } from "./styles";
 import messages from "../../messages";
 import { GoogleAuthButton } from "./components/GoogleAuthButton";
 
