@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 
 import Logo from "../../../assets/brand/logo.png";
-import { CenterContainer } from "../../styles";
+import {  RowContainer  } from "../../styles";
 import { MenuDrawer } from "./MenuDrawer";
 
 export const Navbar = () => {
@@ -12,9 +12,9 @@ export const Navbar = () => {
       <AppBar position="static">
         <Toolbar>
           <MenuDrawer />
-          <CenterContainer>
+          < RowContainer >
             <Box component="img" src={Logo} />
-          </CenterContainer>
+          </ RowContainer >
         </Toolbar>
       </AppBar>
     </Box>

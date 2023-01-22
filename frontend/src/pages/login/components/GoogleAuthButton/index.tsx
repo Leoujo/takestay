@@ -22,7 +22,7 @@ export const GoogleAuthButton = () => {
 	console.log(res)
     // Set cookie
     const cookies = new Cookies();
-    cookies.set("id_token", res.id_token, { expires: res.expires_in });
+    cookies.set("id_token", res.tokenId);
     //  dispatch and navigate
     const profile = { ...res.profileObj };
     dispatch(loginUser(profile));
@@ -42,7 +42,7 @@ export const GoogleAuthButton = () => {
         onSuccess={onSuccess}
         onFailure={onFailure}
         cookiePolicy={"single_host_origin"}
-        isSignedIn={true}
+        isSignedIn={false}
       />
     </Box>
   );

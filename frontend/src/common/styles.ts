@@ -2,22 +2,28 @@ import styled from "@emotion/styled";
 import { Box } from "@mui/system";
 
 interface ContainerProps {
-  alignTop?: boolean;
+  justify?: string;
+  fitContent?: boolean;
 }
 
-export const Container = styled(Box)<ContainerProps>`
+export const ColumnContainer = styled(Box)<ContainerProps>`
   display: flex;
   flex-direction: column;
-  justify-content: ${({ alignTop }) => (alignTop ? "flex-start" : "center")};
+  justify-content: ${({ justify }) => (justify ? justify : "center")};
   align-items: center;
   padding: 1em;
 `;
 
-export const CenterContainer = styled(Box)`
+export const RowContainer = styled(Box)<ContainerProps>`
   display: flex;
-  justify-content: center;
+  justify-content: ${({ justify }) => (justify ? justify : "center")};
   align-items: center;
-  width: 100%;
+  width: ${({ fitContent }) => (fitContent ? "fit-content" : "100%")};
+`;
+
+export const Image = styled.img`
+  width: 40px;
+  margin: 10px;
 `;
 
 export const Background = styled(Box)`

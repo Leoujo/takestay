@@ -3,11 +3,11 @@ import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box } from "@mui/system";
 import Logo from "../../../../assets/brand/logo.png";
-import { Background, Container } from "../../../styles";
+import { Background, ColumnContainer } from "../../../styles";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import EditIcon from '@mui/icons-material/Edit';
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
+import QrCodeIcon from "@mui/icons-material/QrCode";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 export const MenuDrawer: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -21,25 +21,25 @@ export const MenuDrawer: React.FC = () => {
       <MenuIcon onClick={handleDrawerToggle} />
       <Drawer anchor="left" open={isDrawerOpen} onClose={handleDrawerToggle}>
         <Background>
-          <Container alignTop>
+          <ColumnContainer justify="flex-start">
             <Box component="img" src={Logo} />
-          </Container>
+          </ColumnContainer>
           <List sx={{ color: "white" }}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon sx={{ color: "white" }}>
-                  <RemoveRedEyeIcon />
+                  <MenuBookIcon />
                 </ListItemIcon>
-                <ListItemText primary="View Menu" />
+                <ListItemText primary="Menu" />
                 <ArrowForwardIosIcon />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon sx={{ color: "white" }}>
-                  <EditIcon />
+                  <QrCodeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Edit Menu" />
+                <ListItemText primary="QR Code" />
                 <ArrowForwardIosIcon />
               </ListItemButton>
             </ListItem>
