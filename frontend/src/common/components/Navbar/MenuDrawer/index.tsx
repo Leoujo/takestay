@@ -3,7 +3,7 @@ import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box } from "@mui/system";
 import Logo from "../../../../assets/brand/logo.png";
-import { Background, ColumnContainer } from "../../../styles";
+import { Background, ColumnContainer, Image } from "../../../styles";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import LogoutIcon from "@mui/icons-material/Logout";
 import QrCodeIcon from "@mui/icons-material/QrCode";
@@ -21,8 +21,8 @@ export const MenuDrawer: React.FC = () => {
       <MenuIcon onClick={handleDrawerToggle} />
       <Drawer anchor="left" open={isDrawerOpen} onClose={handleDrawerToggle}>
         <Background>
-          <ColumnContainer justify="flex-start">
-            <Box component="img" src={Logo} />
+          <ColumnContainer justify="flex-start" margin="10px 0">
+            <Image src={Logo} width="150px" />
           </ColumnContainer>
           <List sx={{ color: "white" }}>
             <ListItem disablePadding>

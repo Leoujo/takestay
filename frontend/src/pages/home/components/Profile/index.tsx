@@ -9,15 +9,17 @@ export const Profile = () => {
   return (
     <>
       <Container>
-        <RowContainer justify="space-between">
+        <RowContainer justify="space-between" margin="10px 0 ">
           <RowContainer fitContent>
             <Image src={ProfileIcon} />
             <Box>
               <Typography color="primary">Santo Cantim</Typography>
-              <Typography variant="body2" color="grey">By: Leozin</Typography>
+              <Typography variant="body2" color="grey">
+                By: Leozin
+              </Typography>
             </Box>
           </RowContainer>
-          <VisibilityIcon color="primary"/>
+          <VisibilityIcon color="primary" />
         </RowContainer>
       </Container>
       <Divider />
