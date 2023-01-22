@@ -1,18 +1,13 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { ColumnContainer, Image, RowContainer } from "../../../../../../common/styles";
 import CoffeeSample from "../../../../../../assets/images/coffee-sample.png";
+import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 
 export const ItemCard = () => {
   return (
     <Box borderTop="1px solid #F3F3F3" padding="10px">
-      <RowContainer align="flex-start" justify="flex-start">
+      <RowContainer align="flex-start" justify="space-between">
         <Image src={CoffeeSample} width="60px" />
         <ColumnContainer align="flex-start">
           <Typography gutterBottom variant="body1" component="div">
@@ -25,6 +20,7 @@ export const ItemCard = () => {
             $ 2.00
           </Typography>
         </ColumnContainer>
+        <HighlightOffRoundedIcon color="primary" />
       </RowContainer>
     </Box>
   );

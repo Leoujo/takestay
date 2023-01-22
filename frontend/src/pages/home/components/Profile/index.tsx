@@ -1,4 +1,3 @@
-import React from "react";
 import { Box } from "@mui/system";
 import ProfileIcon from "../../../../assets/images/profile.png";
 import { Container, Divider, Typography } from "@mui/material";
