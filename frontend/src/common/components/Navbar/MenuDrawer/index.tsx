@@ -8,12 +8,18 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import LogoutIcon from "@mui/icons-material/Logout";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import { useNavigate } from "react-router";
 
 export const MenuDrawer: React.FC = () => {
+  const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setIsDrawerOpen(!isDrawerOpen);
+  };
+
+  const logOutHandler = () => {
+    navigate("/");
   };
 
   return (
@@ -25,7 +31,7 @@ export const MenuDrawer: React.FC = () => {
             <Image src={Logo} width="150px" />
           </ColumnContainer>
           <List sx={{ color: "white" }}>
-            <ListItem disablePadding>
+            <ListItem disablePadding onClick={() => navigate("/home")}>
               <ListItemButton>
                 <ListItemIcon sx={{ color: "white" }}>
                   <MenuBookIcon />
@@ -34,7 +40,7 @@ export const MenuDrawer: React.FC = () => {
                 <ArrowForwardIosIcon />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding>
+            <ListItem disablePadding onClick={() => navigate("/qrcode")}>
               <ListItemButton>
                 <ListItemIcon sx={{ color: "white" }}>
                   <QrCodeIcon />
@@ -43,7 +49,7 @@ export const MenuDrawer: React.FC = () => {
                 <ArrowForwardIosIcon />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding>
+            <ListItem disablePadding onClick={() => logOutHandler()}>
               <ListItemButton>
                 <ListItemIcon sx={{ color: "white" }}>
                   <LogoutIcon />

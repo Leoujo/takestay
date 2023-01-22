@@ -9,6 +9,8 @@ export const Menu = () => {
       </Typography>
       <CategoryCard />
       <CategoryCard />
+      <CategoryCard />
+      <CategoryCard />
     </Container>
   );
 };
