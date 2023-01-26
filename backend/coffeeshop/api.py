@@ -26,13 +26,13 @@ class CategoriesSchema(ModelSchema):
 #     coffeeshop.save()
 #     return coffeeshop
 
+
 @router.post("/", response=CoffeeshopSchema)
 def post_single_coffeeshop(request, data: CoffeeshopSchema):
     #  dict() transforma o json em um dicionário
     # O ** faz com que vc não precise escrever item por item "(name="leozin", categories:[])"
     d1 = data.dict()
-    new_coffeeshop = Coffeeshop.objects.create(
-        name=d1["name"], logo_url=d1["logo_url"])
+    new_coffeeshop = Coffeeshop.objects.create(name=d1["name"], logo_url=d1["logo_url"])
 
     return new_coffeeshop
 
@@ -47,8 +47,11 @@ def get_all_coffeeshops(request):
 # Get one coffeeshop by id
 @router.get("/{id}", response=CoffeeshopSchema)
 def get_single_coffeeshop(request, id):
-    coffeeshop = Coffeeshop.objects.get(id=id)
-    return coffeeshop
+    object = Coffeeshop.objects.get(pk=id)
+    if object is None:
+        object = []
+
+    return object
 
 
 # CATEGORY - create and delete (both one)

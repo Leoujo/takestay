@@ -3,6 +3,7 @@ import { Router } from "./router";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const theme = createTheme({
   palette: {
@@ -16,13 +17,17 @@ const theme = createTheme({
   },
 });
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <Router />
-      </ThemeProvider>{" "}
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Router />
+        </ThemeProvider>{" "}
+      </Provider>
+    </QueryClientProvider>
   );
 }
 
