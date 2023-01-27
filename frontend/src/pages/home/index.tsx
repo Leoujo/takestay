@@ -8,7 +8,7 @@ import { Profile } from "./components/Profile";
 
 export const Home = () => {
   const { id: userId } = useSelector((state: RootState) => state.user);
-  const { data } = useQuery(["myCoffeeShop"], () => getCoffeeShop(userId), {
+  const { data } = useQuery(["myCoffeeShop"], () => getCoffeeShop(10), {
     retry: false,
   });
 

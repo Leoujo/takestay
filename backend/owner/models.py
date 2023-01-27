@@ -7,15 +7,14 @@ from django.contrib.auth.hashers import make_password
 
 class Owner(models.Model):
     name = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
     email = models.EmailField()
-    coffeeshop_owned = models.OneToOneField(
-        Coffeeshop, on_delete=models.CASCADE, null=True)
+    # coffeeshop_owned = models.OneToOneField(
+    #     Coffeeshop, on_delete=models.CASCADE, null=True)
 
-   #  Encrypt password
-    def save(self, *args, **kwargs):
-        self.password = make_password(self.password)
-        super(Owner, self).save(*args, **kwargs)
+    #  Encrypt password
+    # def save(self, *args, **kwargs):
+    #     self.password = make_password(self.password)
+    #     super(Owner, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.name} ({self.coffeeshop_owned})'
+        return f"{self.name} "

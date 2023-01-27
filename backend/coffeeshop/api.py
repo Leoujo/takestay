@@ -1,10 +1,14 @@
-from ninja import Router, ModelSchema
+from ninja import Router, ModelSchema, Schema
 from .models import Coffeeshop, Category
 from django.shortcuts import get_object_or_404
 from django.forms.models import model_to_dict
 from typing import List
 
 router = Router()
+
+
+class ErrorSchema(Schema):
+    message: str
 
 
 class CoffeeshopSchema(ModelSchema):
@@ -45,13 +49,13 @@ def get_all_coffeeshops(request):
 
 
 # Get one coffeeshop by id
-@router.get("/{id}", response=CoffeeshopSchema)
+@router.get("/{id}", response={200: CoffeeshopSchema, 202: object})
 def get_single_coffeeshop(request, id):
-    object = Coffeeshop.objects.get(pk=id)
-    if object is None:
-        object = []
-
-    return object
+    try:
+        coffeeshops = Coffeeshop.objects.get(pk=id)
+    except Coffeeshop.DoesNotExist:
+        return 202, {}
+    return coffeeshops
 
 
 # CATEGORY - create and delete (both one)

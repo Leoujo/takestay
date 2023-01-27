@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../store/store";
 import { loginUser } from "../../../../store/slices/userSlice";
 import { Cookies } from "react-cookie";
+import { loginOrCreateOwner } from "../../../../api/services/owners";
 
 export const GoogleAuthButton = () => {
   const navigate = useNavigate();
@@ -19,14 +20,13 @@ export const GoogleAuthButton = () => {
     gapi.load("client:auth2", initClient);
   }, []);
   const onSuccess = (res: any) => {
-	console.log(res)
-    // Set cookie
-    const cookies = new Cookies();
-    cookies.set("id_token", res.tokenId);
-    //  dispatch and navigate
-    const profile = { ...res.profileObj };
-    dispatch(loginUser(profile));
-    navigate("/home");
+    loginOrCreateOwner(parseInt(res.googleId), res.profile);
+    //  const cookies = new Cookies();
+    //  cookies.set("id_token", res.tokenId);
+
+    //  const profile = { ...res.profileObj };
+    //  dispatch(loginUser(profile));
+    //  navigate("/home");
 
     console.log("logado!");
   };
