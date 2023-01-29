@@ -19,9 +19,10 @@ const userSlice = createSlice({
       state.email = email;
       state.isLoggedIn = true;
     },
+    resetUser: () => initialState,
   },
 });
 
-export const { loginUser } = userSlice.actions;
+export const { loginUser, resetUser } = userSlice.actions;
 
 export default userSlice.reducer;

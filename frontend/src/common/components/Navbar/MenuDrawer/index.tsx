@@ -9,9 +9,13 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../../store/store";
+import { resetUser } from "../../../../store/slices/userSlice";
 
 export const MenuDrawer: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -20,6 +24,7 @@ export const MenuDrawer: React.FC = () => {
 
   const logOutHandler = () => {
     navigate("/");
+    dispatch(resetUser());
   };
 
   return (
