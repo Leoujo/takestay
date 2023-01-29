@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../common/models";
 
 const initialState: User = {
-  id: 0,
+  id: "",
   name: "",
   email: "",
   isLoggedIn: false,
@@ -13,8 +13,8 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     loginUser: (state, action) => {
-      const { googleId, name, email } = action.payload;
-      state.id = parseInt(googleId);
+      const { id, name, email } = action.payload;
+      state.id = id;
       state.name = name;
       state.email = email;
       state.isLoggedIn = true;

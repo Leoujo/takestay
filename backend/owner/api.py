@@ -38,16 +38,18 @@ def post_owner(request, data: OwnerSchemaCreation):
 
 
 # If i can't find the user, I'll create a new one.
-@router.post("/login", response={201: OwnerSchemaLogin})
+@router.post("/login", response={201: OwnerSchemaLogin, 200: OwnerSchemaLogin})
 def login_owner(request, data: OwnerSchemaLogin):
 
     try:
-        owner = Owner.objects.get(pk=10)
+        print("--> Searching user")
+        owner = Owner.objects.get(id=data.id)
+        return 200, owner
     except Owner.DoesNotExist:
-        print("---> creating...")
-        new_owner = Owner.objects.create(id=10, name=data.name, email=data.email)
+        print("--> Creating user")
+        new_owner = Owner.objects.create(id=data.id, name=data.name, email=data.email)
         return 201, new_owner
-    return owner
+
     # d1 = data.dict()
     # owner = get_object_or_404(Owner, email=d1["email"])
     # return owner
