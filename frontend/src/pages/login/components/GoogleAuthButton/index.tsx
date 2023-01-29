@@ -9,7 +9,7 @@ import { loginUser } from "../../../../store/slices/userSlice";
 import { loginOrCreateOwner } from "../../../../api/services/owners";
 import { useMutation } from "react-query";
 import { LinearProgress } from "@mui/material";
-import { Snackbars } from "../../../../common/components/Snackbars";
+import { Snackbars } from "../../../../common/components/Snackbar";
 
 export const GoogleAuthButton = () => {
   const navigate = useNavigate();
