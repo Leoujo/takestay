@@ -1,5 +1,4 @@
 from django.db import models
-from coffeeshop.models import Coffeeshop
 from django.contrib.auth.hashers import make_password
 
 # Create your models here.
