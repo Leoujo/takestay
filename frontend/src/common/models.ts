@@ -4,3 +4,9 @@ export interface User {
   email: string;
   isLoggedIn: boolean;
 }
+
+export interface CoffeeShop {
+  logo_url: string;
+  name: string;
+  owner: string;
+}

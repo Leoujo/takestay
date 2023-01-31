@@ -6,12 +6,21 @@ import { RootState } from "../../store/store";
 import { Menu } from "./components/Menu";
 import { Profile } from "./components/Profile";
 import { PageSkeleton } from "../../common/components/PageSkeleton";
+import { CoffeeShop } from "../../common/models";
+import { Button } from "@mui/material";
+import { NoCoffeeShop } from "./components/NoCoffeeShop";
+import { useEffect } from "react";
 
 export const Home = () => {
   const { id: userId } = useSelector((state: RootState) => state.user);
-  const { data, isError, isLoading } = useQuery(["myCoffeeShop"], () => getCoffeeShop(userId), {
+  const { data, refetch, isError, isLoading } = useQuery<CoffeeShop>(["myCoffeeShop"], (): Promise<CoffeeShop> => getCoffeeShop(userId), {
     retry: false,
+    enabled: false,
   });
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   console.log(data);
 
@@ -19,17 +28,19 @@ export const Home = () => {
     return <PageSkeleton />;
   }
 
-  if (isError) {
-    return <div>Create new coffeeshop</div>;
-  }
-  console.log(isError);
+  const CoffeShopArea = () => {
+    return (
+      <>
+        <Profile />
+        <Menu />
+      </>
+    );
+  };
 
   return (
     <>
       <Navbar />
-
-      <Profile />
-      <Menu />
+      {isError ? <NoCoffeeShop /> : <CoffeShopArea />}
     </>
   );
 };
