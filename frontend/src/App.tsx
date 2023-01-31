@@ -4,6 +4,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { PersistGate } from "redux-persist/integration/react";
+import persistStore from "redux-persist/es/persistStore";
 
 const theme = createTheme({
   palette: {
@@ -19,13 +21,17 @@ const theme = createTheme({
 
 const queryClient = new QueryClient();
 
+let persistor = persistStore(store);
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <Router />
-        </ThemeProvider>{" "}
+        <PersistGate persistor={persistor}>
+          <ThemeProvider theme={theme}>
+            <Router />
+          </ThemeProvider>
+        </PersistGate>
       </Provider>
     </QueryClientProvider>
   );
