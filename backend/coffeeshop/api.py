@@ -22,3 +22,11 @@ def get_single_coffeeshop(request, userId):
         return 200, coffeeshop
     except Coffeeshop.DoesNotExist:
         raise Http404("Coffeeshop does not exist")
+
+
+# I should send the owner id related to that coffee shop.
+@router.post("/", response=CoffeeshopSchema)
+def create_coffeeshop(request):
+    print("--> Creating coffee shop")
+    new_coffeeshop = Coffeeshop.objects.create()
+    return 201, new_coffeeshop

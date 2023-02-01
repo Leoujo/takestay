@@ -22,8 +22,6 @@ export const Home = () => {
     refetch();
   }, []);
 
-  console.log(data);
-
   if (isLoading) {
     return <PageSkeleton />;
   }

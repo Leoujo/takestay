@@ -9,7 +9,7 @@ export const Profile = () => {
     <>
       <Container>
         <RowContainer justify="space-between" margin="10px 0 ">
-          <RowContainer fitContent>
+          <RowContainer width="fit-content">
             <Image src={ProfileIcon} />
             <Box>
               <Typography color="primary">Santo Cantim</Typography>

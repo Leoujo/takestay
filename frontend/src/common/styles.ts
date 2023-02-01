@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 interface ContainerProps {
   justify?: string;
   align?: string;
-  fitContent?: boolean;
+  fitcontent?: boolean;
 }
 
 interface ImageProps {
@@ -22,7 +22,7 @@ export const RowContainer = styled(Box)<ContainerProps>`
   display: flex;
   justify-content: ${({ justify }) => (justify ? justify : "center")};
   align-items: ${({ align }) => (align ? align : "center")};
-  width: ${({ fitContent }) => (fitContent ? "fit-content" : "100%")};
+  width: 100%;
 `;
 
 export const Image = styled.img<ImageProps>`
