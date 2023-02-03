@@ -6,9 +6,25 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useMutation } from "react-query";
+import { createCoffeeShop } from "../../../api/services/coffeeshops";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../store/store";
+import { LinearProgress } from "@mui/material";
+import { setUserCoffeeShop } from "../../../store/slices/userSlice";
+import { CoffeeShop } from "../../models";
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(true);
+  const [coffeeShopName, setCoffeeShopName] = React.useState("");
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { id: ownerId } = useSelector((state: RootState) => state.user);
+
+  const { mutate, isLoading } = useMutation(() => createCoffeeShop(coffeeShopName, ownerId), {
+    onSuccess: (data): any => dispatch(setUserCoffeeShop(data)),
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,12 +42,16 @@ export default function FormDialog() {
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle> Creating Coffee Shop</DialogTitle>
         <DialogContent>
-          <TextField label="Name" margin="dense" variant="standard" autoFocus fullWidth />
+          <TextField onChange={(e) => setCoffeeShopName(e.target.value)} label="Name" margin="dense" variant="standard" autoFocus fullWidth />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Create</Button>
-        </DialogActions>
+        {isLoading ? (
+          <LinearProgress />
+        ) : (
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={() => mutate()}>Create</Button>
+          </DialogActions>
+        )}
       </Dialog>
     </>
   );

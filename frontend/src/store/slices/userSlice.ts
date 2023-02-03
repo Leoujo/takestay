@@ -5,6 +5,7 @@ const initialState: User = {
   id: "",
   name: "",
   email: "",
+  coffeeShop: null,
   isLoggedIn: false,
 };
 
@@ -19,10 +20,14 @@ const userSlice = createSlice({
       state.email = email;
       state.isLoggedIn = true;
     },
+    setUserCoffeeShop: (state, action) => {
+      console.log(action.payload);
+      state.coffeeShop = action.payload;
+    },
     resetUser: () => initialState,
   },
 });
 
-export const { loginUser, resetUser } = userSlice.actions;
+export const { loginUser, setUserCoffeeShop, resetUser } = userSlice.actions;
 
 export default userSlice.reducer;
