@@ -9,4 +9,9 @@ export interface User {
 export interface CoffeeShop {
   name: string;
   owner: string;
+  categories: Category[];
+}
+
+export interface Category {
+  name: string;
 }
