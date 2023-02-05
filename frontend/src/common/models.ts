@@ -1,8 +1,7 @@
-export interface User {
+export interface Owner {
   id: string;
   name: string;
   email: string;
-  coffeeShop: null | CoffeeShop;
   isLoggedIn: boolean;
 }
 

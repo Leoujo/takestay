@@ -11,15 +11,14 @@ import { createCategory, createCoffeeShop } from "../../../api/services/coffeesh
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { LinearProgress } from "@mui/material";
-import { setUserCoffeeShop } from "../../../store/slices/userSlice";
-import { CoffeeShop } from "../../models";
 
 interface Props {
   type: "coffeeShop" | "category" | "item";
+  refetch: () => void;
 }
 
-export const FormDialog: React.FC<Props> = ({ type }) => {
-  const [open, setOpen] = React.useState(true);
+export const FormDialog: React.FC<Props> = ({ type, refetch }) => {
+  const [open, setOpen] = React.useState(type === "coffeeShop");
   const [coffeeShopName, setCoffeeShopName] = React.useState("");
   const [categoryName, setCategoryName] = React.useState("");
 
@@ -28,11 +27,11 @@ export const FormDialog: React.FC<Props> = ({ type }) => {
   const { id: ownerId } = useSelector((state: RootState) => state.user);
 
   const { mutate: mutateCoffeeShop, isLoading: loadingCoffeeShop } = useMutation(() => createCoffeeShop(coffeeShopName, ownerId), {
-    onSuccess: (data): any => dispatch(setUserCoffeeShop(data)),
+    onSuccess: () => refetch(),
   });
 
   const { mutate: mutateCategory, isLoading: loadingCategory } = useMutation(() => createCategory(categoryName, ownerId), {
-    onSuccess: (data): any => dispatch(setUserCoffeeShop(data)),
+    onSuccess: () => refetch(),
   });
 
   const handleClickOpen = () => {

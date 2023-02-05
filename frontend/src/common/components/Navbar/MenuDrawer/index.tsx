@@ -11,7 +11,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../store/store";
-import { resetUser } from "../../../../store/slices/userSlice";
+import { resetOwner } from "../../../../store/slices/userSlice";
 
 export const MenuDrawer: React.FC = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export const MenuDrawer: React.FC = () => {
 
   const logOutHandler = () => {
     navigate("/");
-    dispatch(resetUser());
+    dispatch(resetOwner());
   };
 
   return (

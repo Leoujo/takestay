@@ -12,9 +12,10 @@ import { FormDialog } from "../../../../common/components/FormDialog";
 interface Props {
   coffeeShop: CoffeeShop;
   ownerName: string;
+  refetch: () => void;
 }
 
-export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, ownerName }) => {
+export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, ownerName, refetch }) => {
   return (
     <>
       <Container>
@@ -37,10 +38,12 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, ownerName }) =>
           <Typography color="primary" variant="h5">
             Menu
           </Typography>
-          <FormDialog type="category" />
+          <FormDialog type="category" refetch={refetch} />
         </RowContainer>
       </Container>
-      {coffeeShop && <CategoryCard />}
+      {coffeeShop.categories?.map((category, key) => (
+        <CategoryCard category={category} key={key} />
+      ))}
     </>
   );
 };

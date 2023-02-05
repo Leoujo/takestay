@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../store/store";
-import { loginUser } from "../../../../store/slices/userSlice";
+import { loginOwner } from "../../../../store/slices/userSlice";
 import { loginOrCreateOwner } from "../../../../api/services/owners";
 import { useMutation } from "react-query";
 import { LinearProgress } from "@mui/material";
@@ -28,7 +28,7 @@ export const GoogleAuthButton = () => {
   if (isSuccess) {
     // should store token id on cookies
     const { data } = mutateData;
-    dispatch(loginUser(data));
+    dispatch(loginOwner(data));
     navigate("/home");
   }
 

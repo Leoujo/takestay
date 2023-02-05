@@ -2,23 +2,17 @@ from ninja import Router, ModelSchema, Schema
 from .models import Coffeeshop, Category, Item
 from django.http import Http404
 from owner.models import Owner
+from django.core import serializers
 
 
 router = Router()
 
 
-class CategorySchema(ModelSchema):
-    class Config:
-        model = Category
-        model_fields = ["name"]
+class OkSchema(Schema):
+    message: str
 
 
-class ItemSchema(ModelSchema):
-    class Config:
-        model = Item
-        model_fields = ["name", "category"]
-
-
+# COFFEE SHOPS -----------------------------------------------------------------------
 class CoffeeshopSchema(ModelSchema):
     class Config:
         model = Coffeeshop
@@ -30,16 +24,11 @@ class CreateCoffeeshopSchema(Schema):
     owner_id: str
 
 
-class OkSchema(Schema):
-    message: str
-
-
-# Get one coffee shop by user id
+# Get one coffee shop by owner id
 @router.get("/{userId}", response=list[CoffeeshopSchema])
 def get_single_coffeeshop(request, userId):
     print("--> Searching coffeeshop")
     coffeeshop = Coffeeshop.objects.filter(owner__id=userId)
-    print(coffeeshop)
     return 200, coffeeshop
 
 
@@ -53,13 +42,20 @@ def create_coffeeshop(request, payload: CreateCoffeeshopSchema):
     return 201, new_coffeeshop
 
 
+# CATEGORY ---------------------------------------------------------------------------
+class CategorySchema(ModelSchema):
+    class Config:
+        model = Category
+        model_fields = ["name"]
+
+
 # Create category by coffee shop id
-@router.post("/category/{coffeeShopId}/", response={201: CoffeeshopSchema})
-def create_category(request, coffeeShopId, payload: CategorySchema):
+@router.post("/category/{ownerId}/", response={201: CoffeeshopSchema})
+def create_category(request, ownerId, payload: CategorySchema):
     print("--> Creating new category")
     new_category = Category.objects.create(name=payload.name)
     print("--> Getting the coffeeshop")
-    coffeeshop = Coffeeshop.objects.get(id=coffeeShopId)
+    coffeeshop = Coffeeshop.objects.get(owner__id=ownerId)
     print("--> Adding the category to the coffeeshop")
     coffeeshop.categories.add(new_category)
 
@@ -72,6 +68,15 @@ def create_category(request):
     print("--> Looking for all available categories")
     categories = Category.objects.all()
     return categories
+
+
+# ITEMS -----------------------------------------------------------------------------
+
+
+class ItemSchema(ModelSchema):
+    class Config:
+        model = Item
+        model_fields = ["name", "category"]
 
 
 # Get all items within a category

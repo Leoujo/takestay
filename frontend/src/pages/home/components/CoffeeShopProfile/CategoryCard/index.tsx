@@ -9,13 +9,19 @@ import AddIcon from "@mui/icons-material/Add";
 import { RowContainer } from "../../../../../common/styles";
 import { Box } from "@mui/system";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
+import { Category } from "../../../../../common/models";
 
-export const CategoryCard = () => {
+interface Props {
+  category: Category;
+}
+export const CategoryCard: React.FC<Props> = ({ category }) => {
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon color="secondary" />} aria-controls="panel1a-content" id="panel1a-header">
         <RowContainer justify="flex-start">
-          <Typography variant="h6" flexGrow={1}>Coffees</Typography>
+          <Typography variant="h6" flexGrow={1}>
+            Categoria
+          </Typography>
           <HighlightOffRoundedIcon color="secondary" sx={{ m: "0 10px" }} />
         </RowContainer>
       </AccordionSummary>
