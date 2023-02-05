@@ -11,21 +11,8 @@ import { useEffect } from "react";
 import { CoffeeShopProfile } from "./components/CoffeeShopProfile";
 
 export const Home = () => {
-  // Fix: Just use the redux or the react query to manage render.
   const { coffeeShop } = useSelector((state: RootState) => state.user);
   console.log(coffeeShop);
-  //   const { refetch, isLoading } = useQuery<CoffeeShop>(["myCoffeeShop"], (): Promise<CoffeeShop> => getCoffeeShop(userId), {
-  //     retry: false,
-  //     enabled: false,
-  //   });
-
-  //   useEffect(() => {
-  //     refetch();
-  //   }, []);
-
-  //   if (isLoading) {
-  //     return <PageSkeleton />;
-  //   }
 
   return (
     <>

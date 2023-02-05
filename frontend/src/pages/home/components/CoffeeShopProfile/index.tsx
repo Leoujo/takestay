@@ -12,7 +12,6 @@ interface Props {
 }
 
 export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop }) => {
-  console.log(coffeeShop);
   return (
     <>
       <Container>

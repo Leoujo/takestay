@@ -1,7 +1,7 @@
 from ninja import Router, ModelSchema, Schema
 from .models import Coffeeshop
-from typing import List
 from django.http import Http404
+from owner.models import Owner
 
 
 router = Router()
@@ -10,7 +10,12 @@ router = Router()
 class CoffeeshopSchema(ModelSchema):
     class Config:
         model = Coffeeshop
-        model_fields = "__all__"
+        model_fields = ["name", "owner"]
+
+
+class CreateCoffeeshopSchema(Schema):
+    name: str
+    owner_id: str
 
 
 # Get one coffeeshop by user id
@@ -24,9 +29,16 @@ def get_single_coffeeshop(request, userId):
         raise Http404("Coffeeshop does not exist")
 
 
-# I should send the owner id related to that coffee shop.
-@router.post("/", response=CoffeeshopSchema)
-def create_coffeeshop(request):
-    print("--> Creating coffee shop")
-    new_coffeeshop = Coffeeshop.objects.create()
+# Create one coffee shop linked to an user id
+@router.post("/", response={201: CoffeeshopSchema})
+def create_coffeeshop(request, payload: CreateCoffeeshopSchema):
+    print("--> Looking for owner by id")
+    owner = Owner.objects.get(id=payload.owner_id)
+    print("--> Creating coffee shop for that owner")
+    new_coffeeshop = Coffeeshop.objects.create(name=payload.name, owner=owner)
     return 201, new_coffeeshop
+
+
+# Create coffee shop category
+
+# Create coffee shop item
