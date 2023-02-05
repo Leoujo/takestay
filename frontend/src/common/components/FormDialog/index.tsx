@@ -7,22 +7,31 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useMutation } from "react-query";
-import { createCoffeeShop } from "../../../api/services/coffeeshops";
+import { createCategory, createCoffeeShop } from "../../../api/services/coffeeshops";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { LinearProgress } from "@mui/material";
 import { setUserCoffeeShop } from "../../../store/slices/userSlice";
 import { CoffeeShop } from "../../models";
 
-export default function FormDialog() {
+interface Props {
+  type: "coffeeShop" | "category" | "item";
+}
+
+export const FormDialog: React.FC<Props> = ({ type }) => {
   const [open, setOpen] = React.useState(true);
   const [coffeeShopName, setCoffeeShopName] = React.useState("");
+  const [categoryName, setCategoryName] = React.useState("");
 
   const dispatch = useDispatch<AppDispatch>();
 
   const { id: ownerId } = useSelector((state: RootState) => state.user);
 
-  const { mutate, isLoading } = useMutation(() => createCoffeeShop(coffeeShopName, ownerId), {
+  const { mutate: mutateCoffeeShop, isLoading: loadingCoffeeShop } = useMutation(() => createCoffeeShop(coffeeShopName, ownerId), {
+    onSuccess: (data): any => dispatch(setUserCoffeeShop(data)),
+  });
+
+  const { mutate: mutateCategory, isLoading: loadingCategory } = useMutation(() => createCategory(categoryName, ownerId), {
     onSuccess: (data): any => dispatch(setUserCoffeeShop(data)),
   });
 
@@ -34,25 +43,41 @@ export default function FormDialog() {
     setOpen(false);
   };
 
+  const handleCreate = () => {
+    if (type === "category") {
+      mutateCategory();
+    } else if (type === "coffeeShop") {
+      mutateCoffeeShop();
+    }
+  };
+
   return (
     <>
       <Button variant="outlined" onClick={handleClickOpen}>
-        New Coffee Shop
+        New {type}
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle> Creating Coffee Shop</DialogTitle>
+        <DialogTitle> Creating {type}</DialogTitle>
         <DialogContent>
-          <TextField onChange={(e) => setCoffeeShopName(e.target.value)} label="Name" margin="dense" variant="standard" autoFocus fullWidth />
+          {type === "coffeeShop" && (
+            <TextField onChange={(e) => setCoffeeShopName(e.target.value)} label="Name" margin="dense" variant="standard" autoFocus fullWidth />
+          )}
+          {type === "category" && (
+            <TextField onChange={(e) => setCategoryName(e.target.value)} label="Name" margin="dense" variant="standard" autoFocus fullWidth />
+          )}
+          {type === "item" && (
+            <TextField onChange={(e) => setCoffeeShopName(e.target.value)} label="Name" margin="dense" variant="standard" autoFocus fullWidth />
+          )}
         </DialogContent>
-        {isLoading ? (
+        {loadingCoffeeShop || loadingCategory ? (
           <LinearProgress />
         ) : (
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={() => mutate()}>Create</Button>
+            <Button onClick={() => handleCreate()}>Create</Button>
           </DialogActions>
         )}
       </Dialog>
     </>
   );
-}
+};

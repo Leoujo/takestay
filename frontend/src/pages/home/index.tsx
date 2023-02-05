@@ -1,23 +1,26 @@
-import { useQuery } from "react-query";
-import { getCoffeeShop } from "../../api/services/coffeeshops";
 import { useSelector } from "react-redux";
 import { Navbar } from "../../common/components/Navbar";
 import { RootState } from "../../store/store";
-import { PageSkeleton } from "../../common/components/PageSkeleton";
-import { CoffeeShop } from "../../common/models";
-import { Button } from "@mui/material";
-import { NoCoffeeShop } from "./components/NoCoffeeShop";
-import { useEffect } from "react";
 import { CoffeeShopProfile } from "./components/CoffeeShopProfile";
+import { useQuery } from "react-query";
+import { getCoffeeShop } from "../../api/services/coffeeshops";
+import { NoCoffeeShop } from "./components/NoCoffeeShop";
 
 export const Home = () => {
-  const { coffeeShop } = useSelector((state: RootState) => state.user);
-  console.log(coffeeShop);
+  const { id: ownerId, name: ownerName } = useSelector((state: RootState) => state.user);
+  // Jogar essa função no redux
+  const { data, isLoading } = useQuery(["ownerCoffeeshop"], () => getCoffeeShop(ownerId), {
+    retry: false,
+  });
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <>
       <Navbar />
-      {coffeeShop ? <CoffeeShopProfile coffeeShop={coffeeShop} /> : <NoCoffeeShop />}
+      {data ? <CoffeeShopProfile coffeeShop={data} ownerName={ownerName} /> : <NoCoffeeShop />}
     </>
   );
 };

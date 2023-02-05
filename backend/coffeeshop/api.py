@@ -35,14 +35,12 @@ class OkSchema(Schema):
 
 
 # Get one coffee shop by user id
-@router.get("/{userId}", response=CoffeeshopSchema)
+@router.get("/{userId}", response=list[CoffeeshopSchema])
 def get_single_coffeeshop(request, userId):
-    try:
-        print("--> Searching coffeeshop")
-        coffeeshop = Coffeeshop.objects.get(owner__id=userId)
-        return 200, coffeeshop
-    except Coffeeshop.DoesNotExist:
-        raise Http404("Coffeeshop does not exist")
+    print("--> Searching coffeeshop")
+    coffeeshop = Coffeeshop.objects.filter(owner__id=userId)
+    print(coffeeshop)
+    return 200, coffeeshop
 
 
 # Create one coffee shop linked to an user id
@@ -56,12 +54,16 @@ def create_coffeeshop(request, payload: CreateCoffeeshopSchema):
 
 
 # Create category by coffee shop id
-# @router.post("/category/", response={201: CategorySchema})
-# def create_category(request, payload: CategorySchema):
-#     print("--> Creating new category")
-#     new_category = Category.objects.create(name=payload.name)
+@router.post("/category/{coffeeShopId}/", response={201: CoffeeshopSchema})
+def create_category(request, coffeeShopId, payload: CategorySchema):
+    print("--> Creating new category")
+    new_category = Category.objects.create(name=payload.name)
+    print("--> Getting the coffeeshop")
+    coffeeshop = Coffeeshop.objects.get(id=coffeeShopId)
+    print("--> Adding the category to the coffeeshop")
+    coffeeshop.categories.add(new_category)
 
-#     return 201, new_category
+    return 201, coffeeshop
 
 
 # Get all possible categories

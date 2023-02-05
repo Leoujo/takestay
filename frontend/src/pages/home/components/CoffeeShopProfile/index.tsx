@@ -1,4 +1,4 @@
-import { Divider, Typography } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React from "react";
 import ProfileIcon from "../../../../assets/images/profile.png";
@@ -6,12 +6,15 @@ import { Image, RowContainer } from "../../../../common/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { CategoryCard } from "./CategoryCard";
 import { CoffeeShop } from "../../../../common/models";
+import { useQuery } from "react-query";
+import { FormDialog } from "../../../../common/components/FormDialog";
 
 interface Props {
   coffeeShop: CoffeeShop;
+  ownerName: string;
 }
 
-export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop }) => {
+export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, ownerName }) => {
   return (
     <>
       <Container>
@@ -21,7 +24,7 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop }) => {
             <Box>
               <Typography color="primary">{coffeeShop.name}</Typography>
               <Typography variant="body2" color="grey">
-                By: Leozin
+                By: {ownerName}
               </Typography>
             </Box>
           </RowContainer>
@@ -30,14 +33,14 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop }) => {
       </Container>
       <Divider />
       <Container sx={{ m: "20px 0" }}>
-        <Typography color="primary" variant="h5">
-          Menu
-        </Typography>
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
+        <RowContainer justify="space-between">
+          <Typography color="primary" variant="h5">
+            Menu
+          </Typography>
+          <FormDialog type="category" />
+        </RowContainer>
       </Container>
+      {coffeeShop && <CategoryCard />}
     </>
   );
 };
