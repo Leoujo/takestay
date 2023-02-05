@@ -1,60 +1,80 @@
-from ninja import Router, ModelSchema
-from .models import Coffeeshop, Category
-from django.shortcuts import get_object_or_404
-from django.forms.models import model_to_dict
-from typing import List
+from ninja import Router, ModelSchema, Schema
+from .models import Coffeeshop, Category, Item
+from django.http import Http404
+from owner.models import Owner
+
 
 router = Router()
+
+
+class CategorySchema(ModelSchema):
+    class Config:
+        model = Category
+        model_fields = ["name"]
+
+
+class ItemSchema(ModelSchema):
+    class Config:
+        model = Item
+        model_fields = ["name", "category"]
 
 
 class CoffeeshopSchema(ModelSchema):
     class Config:
         model = Coffeeshop
-        model_fields = "__all__"
+        model_fields = ["name", "owner", "categories"]
 
 
-class CategoriesSchema(ModelSchema):
-    class Config:
-        model = Category
-        model_fields = "__all__"
+class CreateCoffeeshopSchema(Schema):
+    name: str
+    owner_id: str
 
 
-# @router.post("/", response=CoffeeshopSchema)
-# def createSingleCoffeeshop(request, coffeeshop: CoffeeshopSchema):
-#     c1 = coffeeshop.dict()
-#     coffeeshop = Coffeeshop(**c1)
-#     coffeeshop.save()
-#     return coffeeshop
-
-@router.post("/", response=CoffeeshopSchema)
-def post_single_coffeeshop(request, data: CoffeeshopSchema):
-    #  dict() transforma o json em um dicionário
-    # O ** faz com que vc não precise escrever item por item "(name="leozin", categories:[])"
-    d1 = data.dict()
-    new_coffeeshop = Coffeeshop.objects.create(
-        name=d1["name"], logo_url=d1["logo_url"])
-
-    return new_coffeeshop
+class OkSchema(Schema):
+    message: str
 
 
-# Get all the coffeeshops
-@router.get("/", response=List[CoffeeshopSchema])
-def get_all_coffeeshops(request):
-    coffeeshops = Coffeeshop.objects.all()
-    return coffeeshops
+# Get one coffee shop by user id
+@router.get("/{userId}", response=CoffeeshopSchema)
+def get_single_coffeeshop(request, userId):
+    try:
+        print("--> Searching coffeeshop")
+        coffeeshop = Coffeeshop.objects.get(owner__id=userId)
+        return 200, coffeeshop
+    except Coffeeshop.DoesNotExist:
+        raise Http404("Coffeeshop does not exist")
 
 
-# Get one coffeeshop by id
-@router.get("/{id}", response=CoffeeshopSchema)
-def get_single_coffeeshop(request, id):
-    coffeeshop = Coffeeshop.objects.get(id=id)
-    return coffeeshop
+# Create one coffee shop linked to an user id
+@router.post("/", response={201: CoffeeshopSchema})
+def create_coffeeshop(request, payload: CreateCoffeeshopSchema):
+    print("--> Looking for owner by id")
+    owner = Owner.objects.get(id=payload.owner_id)
+    print("--> Creating coffee shop for that owner")
+    new_coffeeshop = Coffeeshop.objects.create(name=payload.name, owner=owner)
+    return 201, new_coffeeshop
 
 
-# CATEGORY - create and delete (both one)
-# @router.get("/categories/", response=List[CategoriesSchema])
-# def getAllCategories(request):
-#     categories = Category.objects.all()
-#     return categories
+# Create category by coffee shop id
+# @router.post("/category/", response={201: CategorySchema})
+# def create_category(request, payload: CategorySchema):
+#     print("--> Creating new category")
+#     new_category = Category.objects.create(name=payload.name)
 
-# ITEM - create and delete (both one)
+#     return 201, new_category
+
+
+# Get all possible categories
+@router.get("/category/", response=list[CategorySchema])
+def create_category(request):
+    print("--> Looking for all available categories")
+    categories = Category.objects.all()
+    return categories
+
+
+# Get all items within a category
+@router.get("/items/{categoryId}", response=list[ItemSchema])
+def create_category(request, categoryId):
+    print("--> Looking for all items in a specific category")
+    items = Item.objects.filter(category__id=categoryId)
+    return items

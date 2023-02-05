@@ -5,7 +5,7 @@ from .models import Owner
 
 
 class Owners(admin.ModelAdmin):
-    list_display = ('name', 'email', 'coffeeshop_owned')
+    list_display = ("name", "email")
 
 
 admin.site.register(Owner, Owners)
