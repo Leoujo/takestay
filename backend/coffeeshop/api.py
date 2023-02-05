@@ -1,5 +1,5 @@
 from ninja import Router, ModelSchema, Schema
-from .models import Coffeeshop
+from .models import Coffeeshop, Category, Item
 from django.http import Http404
 from owner.models import Owner
 
@@ -7,10 +7,22 @@ from owner.models import Owner
 router = Router()
 
 
+class CategorySchema(ModelSchema):
+    class Config:
+        model = Category
+        model_fields = ["name"]
+
+
+class ItemSchema(ModelSchema):
+    class Config:
+        model = Item
+        model_fields = ["name", "category"]
+
+
 class CoffeeshopSchema(ModelSchema):
     class Config:
         model = Coffeeshop
-        model_fields = ["name", "owner"]
+        model_fields = ["name", "owner", "categories"]
 
 
 class CreateCoffeeshopSchema(Schema):
@@ -18,7 +30,11 @@ class CreateCoffeeshopSchema(Schema):
     owner_id: str
 
 
-# Get one coffeeshop by user id
+class OkSchema(Schema):
+    message: str
+
+
+# Get one coffee shop by user id
 @router.get("/{userId}", response=CoffeeshopSchema)
 def get_single_coffeeshop(request, userId):
     try:
@@ -39,6 +55,26 @@ def create_coffeeshop(request, payload: CreateCoffeeshopSchema):
     return 201, new_coffeeshop
 
 
-# Create coffee shop category
+# Create category by coffee shop id
+# @router.post("/category/", response={201: CategorySchema})
+# def create_category(request, payload: CategorySchema):
+#     print("--> Creating new category")
+#     new_category = Category.objects.create(name=payload.name)
 
-# Create coffee shop item
+#     return 201, new_category
+
+
+# Get all possible categories
+@router.get("/category/", response=list[CategorySchema])
+def create_category(request):
+    print("--> Looking for all available categories")
+    categories = Category.objects.all()
+    return categories
+
+
+# Get all items within a category
+@router.get("/items/{categoryId}", response=list[ItemSchema])
+def create_category(request, categoryId):
+    print("--> Looking for all items in a specific category")
+    items = Item.objects.filter(category__id=categoryId)
+    return items

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Coffeeshop
+from .models import Coffeeshop, Category, Item
 
 
 class Coffeeshops(admin.ModelAdmin):
@@ -16,4 +16,14 @@ class Coffeeshops(admin.ModelAdmin):
     list_per_page = 10
 
 
+class Categories(admin.ModelAdmin):
+    list_display = ("name", "id")
+
+
+class Items(admin.ModelAdmin):
+    list_display = ("name", "id")
+
+
 admin.site.register(Coffeeshop, Coffeeshops)
+admin.site.register(Category, Categories)
+admin.site.register(Item, Items)
