@@ -20,7 +20,7 @@ export const CategoryCard: React.FC<Props> = ({ category }) => {
       <AccordionSummary expandIcon={<ExpandMoreIcon color="secondary" />} aria-controls="panel1a-content" id="panel1a-header">
         <RowContainer justify="flex-start">
           <Typography variant="h6" flexGrow={1}>
-            Categoria
+            {category.name}
           </Typography>
           <HighlightOffRoundedIcon color="secondary" sx={{ m: "0 10px" }} />
         </RowContainer>

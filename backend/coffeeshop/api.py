@@ -13,6 +13,19 @@ class OkSchema(Schema):
 
 
 # COFFEE SHOPS -----------------------------------------------------------------------
+class CategorySchema(ModelSchema):
+    class Config:
+        model = Category
+        model_fields = ["name", "id"]
+
+
+# Here I'm showing the complete category object, and not just the id.
+class NestedCoffeeshopSchema(Schema):
+    name: str
+    owner_id: str
+    categories: list[CategorySchema]
+
+
 class CoffeeshopSchema(ModelSchema):
     class Config:
         model = Coffeeshop
@@ -25,7 +38,7 @@ class CreateCoffeeshopSchema(Schema):
 
 
 # Get one coffee shop by owner id
-@router.get("/{userId}", response=list[CoffeeshopSchema])
+@router.get("/{userId}", response=list[NestedCoffeeshopSchema])
 def get_single_coffeeshop(request, userId):
     print("--> Searching coffeeshop")
     coffeeshop = Coffeeshop.objects.filter(owner__id=userId)
@@ -43,10 +56,6 @@ def create_coffeeshop(request, payload: CreateCoffeeshopSchema):
 
 
 # CATEGORY ---------------------------------------------------------------------------
-class CategorySchema(ModelSchema):
-    class Config:
-        model = Category
-        model_fields = ["name"]
 
 
 # Create category by coffee shop id
