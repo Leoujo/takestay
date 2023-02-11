@@ -7,20 +7,24 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useMutation } from "react-query";
-import { createCategory, createCoffeeShop } from "../../../api/services/coffeeshops";
+import { createCategory, createCoffeeShop, createItem } from "../../../api/services/coffeeshops";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 import { LinearProgress } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { Item } from "../../models";
 
 interface Props {
   type: "coffeeShop" | "category" | "item";
+  categoryId?: number;
   refetch: () => void;
 }
 
-export const FormDialog: React.FC<Props> = ({ type, refetch }) => {
+export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
   const [open, setOpen] = React.useState(type === "coffeeShop");
   const [coffeeShopName, setCoffeeShopName] = React.useState("");
   const [categoryName, setCategoryName] = React.useState("");
+  const [itemObject, setItemObject] = React.useState<Item>({ name: "", description: "", price: 0 });
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -31,6 +35,10 @@ export const FormDialog: React.FC<Props> = ({ type, refetch }) => {
   });
 
   const { mutate: mutateCategory, isLoading: loadingCategory } = useMutation(() => createCategory(categoryName, ownerId), {
+    onSuccess: () => refetch(),
+  });
+
+  const { mutate: mutateItem, isLoading: loadingItem } = useMutation(() => createItem(categoryId, itemObject), {
     onSuccess: () => refetch(),
   });
 
@@ -47,28 +55,53 @@ export const FormDialog: React.FC<Props> = ({ type, refetch }) => {
       mutateCategory();
     } else if (type === "coffeeShop") {
       mutateCoffeeShop();
+    } else if (type === "item") {
+      mutateItem();
     }
   };
 
+  // Fix: Use react hook form and yup resolver
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button startIcon={<AddIcon />} variant="outlined" onClick={handleClickOpen}>
         New {type}
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle> Creating {type}</DialogTitle>
         <DialogContent>
           {type === "coffeeShop" && (
-            <TextField onChange={(e) => setCoffeeShopName(e.target.value)} label="Name" margin="dense" variant="standard" autoFocus fullWidth />
+            <TextField onChange={(e) => setCoffeeShopName(e.target.value)} label="Name" margin="dense" variant="outlined" autoFocus fullWidth />
           )}
           {type === "category" && (
-            <TextField onChange={(e) => setCategoryName(e.target.value)} label="Name" margin="dense" variant="standard" autoFocus fullWidth />
+            <TextField onChange={(e) => setCategoryName(e.target.value)} label="Name" margin="dense" variant="outlined" autoFocus fullWidth />
           )}
           {type === "item" && (
-            <TextField onChange={(e) => setCoffeeShopName(e.target.value)} label="Name" margin="dense" variant="standard" autoFocus fullWidth />
+            <>
+              <TextField
+                onChange={(e) => setItemObject({ ...itemObject, name: e.target.value })}
+                label="Name"
+                margin="dense"
+                variant="outlined"
+                fullWidth
+              />
+              <TextField
+                onChange={(e) => setItemObject({ ...itemObject, description: e.target.value })}
+                label="Description"
+                margin="dense"
+                variant="outlined"
+                fullWidth
+              />
+              <TextField
+                onChange={(e) => setItemObject({ ...itemObject, price: parseInt(e.target.value) })}
+                label="Price"
+                margin="dense"
+                variant="outlined"
+                fullWidth
+              />
+            </>
           )}
         </DialogContent>
-        {loadingCoffeeShop || loadingCategory ? (
+        {loadingCoffeeShop || loadingCategory || loadingItem ? (
           <LinearProgress />
         ) : (
           <DialogActions>

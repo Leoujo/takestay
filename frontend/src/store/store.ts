@@ -1,19 +1,23 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userSlice from "./slices/userSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import coffeeShopSlice from "./slices/coffeeShopSlice";
 
 const persistConfig = {
   key: "takestay",
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, userSlice);
+const reducers = combineReducers({
+  user: userSlice,
+  coffeeShop: coffeeShopSlice,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer: {
-    user: persistedReducer,
-  },
+  reducer: persistedReducer,
 });
 
 // ALERT: Study this two lines in the future

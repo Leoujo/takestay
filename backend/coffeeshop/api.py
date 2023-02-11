@@ -1,19 +1,52 @@
 from ninja import Router, ModelSchema, Schema
 from .models import Coffeeshop, Category, Item
 from owner.models import Owner
+from django.shortcuts import get_object_or_404
 
 
 router = Router()
 
-
-class OkSchema(Schema):
-    message: str
-
-
+# ITEMS -----------------------------------------------------------------------------
 class ItemSchema(ModelSchema):
     class Config:
         model = Item
         model_fields = "__all__"
+
+
+# Create item by category id
+@router.post("/item/{categoryId}/", response={201: ItemSchema})
+def create_item(request, categoryId, payload: ItemSchema):
+    print("--> Create new item")
+    new_item = Item.objects.create(
+        name=payload.name,
+        description=payload.description,
+        price=payload.price,
+    )
+    print("--> Getting the category")
+    category = Category.objects.get(id=categoryId)
+    print("--> Adding item to category")
+    category.items.add(new_item)
+    return 201, category
+
+
+# Get all items within a category
+@router.get("/items/{categoryId}", response=list[ItemSchema])
+def create_category(request, categoryId):
+    print("--> Looking for all items in a specific category")
+    items = Item.objects.filter(category__id=categoryId)
+    return items
+
+
+# @router.post("/category/{ownerId}/", response={201: CoffeeshopSchema})
+# def create_category(request, ownerId, payload: CreateCategorySchema):
+#     print("--> Creating new category")
+#     new_category = Category.objects.create(name=payload.name)
+#     print("--> Getting the coffeeshop")
+#     coffeeshop = Coffeeshop.objects.get(owner__id=ownerId)
+#     print("--> Adding the category to the coffeeshop")
+#     coffeeshop.categories.add(new_category)
+
+#     return 201, coffeeshop
 
 
 # COFFEE SHOPS -----------------------------------------------------------------------
@@ -28,11 +61,12 @@ class CreateCategorySchema(ModelSchema):
 class CategorySchema(ModelSchema):
     class Config:
         model = Category
-        model_fields = ["name", "items"]
+        model_fields = ["name", "items", "id"]
 
 
 class NestedCategorySchema(Schema):
     name: str
+    id: int
     items: list[ItemSchema]
 
 
@@ -76,8 +110,17 @@ def create_coffeeshop(request, payload: CreateCoffeeshopSchema):
 
 # CATEGORY ---------------------------------------------------------------------------
 
+# Delete category by id
+@router.delete("/category/{categoryId}")
+def delete_category(request, categoryId):
+    print("--> Getting category")
+    category = get_object_or_404(Category, id=categoryId)
+    print("--> Deleting it")
+    category.delete()
+    return {"success": True}
 
-# Create category by coffee shop id
+
+# Create category by owner id
 @router.post("/category/{ownerId}/", response={201: CoffeeshopSchema})
 def create_category(request, ownerId, payload: CreateCategorySchema):
     print("--> Creating new category")
@@ -91,19 +134,8 @@ def create_category(request, ownerId, payload: CreateCategorySchema):
 
 
 # Get all possible categories
-@router.get("/category/", response=list[CategorySchema])
+@router.get("/category", response=list[CategorySchema])
 def create_category(request):
     print("--> Looking for all available categories")
     categories = Category.objects.all()
     return categories
-
-
-# ITEMS -----------------------------------------------------------------------------
-
-
-# Get all items within a category
-@router.get("/items/{categoryId}", response=list[ItemSchema])
-def create_category(request, categoryId):
-    print("--> Looking for all items in a specific category")
-    items = Item.objects.filter(category__id=categoryId)
-    return items

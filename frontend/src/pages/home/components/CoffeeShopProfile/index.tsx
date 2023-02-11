@@ -42,7 +42,7 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, ownerName, refe
         </RowContainer>
       </Container>
       {coffeeShop.categories?.map((category, key) => (
-        <CategoryCard category={category} key={key} />
+        <CategoryCard category={category} refetch={refetch} key={key} />
       ))}
     </>
   );

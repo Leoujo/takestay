@@ -7,13 +7,13 @@ export interface Owner {
 
 export interface CoffeeShop {
   name: string;
-  owner: string;
+  owner_id: string;
   categories: Category[];
 }
 
 export interface Category {
   name: string;
-  id: number;
+  id: number | undefined;
   items: Item[];
 }
 
