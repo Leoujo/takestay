@@ -13,4 +13,11 @@ export interface CoffeeShop {
 
 export interface Category {
   name: string;
+  id: number;
+  items: Item[];
+}
+
+export interface Item {
+  name: string;
+  category: number;
 }

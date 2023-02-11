@@ -6,13 +6,20 @@ import { useQuery } from "react-query";
 import { getCoffeeShop } from "../../api/services/coffeeshops";
 import { NoCoffeeShop } from "./components/NoCoffeeShop";
 import { PageSkeleton } from "../../common/components/PageSkeleton/index";
+import { useEffect } from "react";
 
 export const Home = () => {
   const { id: ownerId, name: ownerName } = useSelector((state: RootState) => state.user);
-  // Jogar essa função no redux
+
   const { data, refetch, isFetching } = useQuery(["ownerCoffeeshop"], () => getCoffeeShop(ownerId), {
     retry: false,
+    enabled: false,
   });
+
+  // FIX: Check why this is necessary
+  useEffect(() => {
+    refetch();
+  }, []);
 
   if (isFetching) {
     return <PageSkeleton />;

@@ -1,8 +1,6 @@
 from ninja import Router, ModelSchema, Schema
 from .models import Coffeeshop, Category, Item
-from django.http import Http404
 from owner.models import Owner
-from django.core import serializers
 
 
 router = Router()
@@ -12,18 +10,30 @@ class OkSchema(Schema):
     message: str
 
 
+class ItemSchema(ModelSchema):
+    class Config:
+        model = Item
+        model_fields = ["name"]
+
+
 # COFFEE SHOPS -----------------------------------------------------------------------
 class CategorySchema(ModelSchema):
     class Config:
         model = Category
-        model_fields = ["name", "id"]
+        model_fields = ["name", "id", "items"]
+
+
+class NestedCategorySchema(Schema):
+    id: str
+    name: str
+    items: list[ItemSchema]
 
 
 # Here I'm showing the complete category object, and not just the id.
 class NestedCoffeeshopSchema(Schema):
     name: str
     owner_id: str
-    categories: list[CategorySchema]
+    categories: list[NestedCategorySchema]
 
 
 class CoffeeshopSchema(ModelSchema):
@@ -36,6 +46,8 @@ class CreateCoffeeshopSchema(Schema):
     name: str
     owner_id: str
 
+
+#  COFFEE SHOP ---------------------------------------------------------------------------
 
 # Get one coffee shop by owner id
 @router.get("/{userId}", response=list[NestedCoffeeshopSchema])
@@ -80,12 +92,6 @@ def create_category(request):
 
 
 # ITEMS -----------------------------------------------------------------------------
-
-
-class ItemSchema(ModelSchema):
-    class Config:
-        model = Item
-        model_fields = ["name", "category"]
 
 
 # Get all items within a category

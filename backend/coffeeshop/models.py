@@ -2,19 +2,20 @@ from django.db import models
 from owner.models import Owner
 
 
+class Item(models.Model):
+    name = models.CharField(max_length=255)
+    # category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    items = models.ManyToManyField(Item)
 
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name_plural = "categories"
-
-
-class Item(models.Model):
-    name = models.CharField(max_length=255)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
 
 
 class Coffeeshop(models.Model):

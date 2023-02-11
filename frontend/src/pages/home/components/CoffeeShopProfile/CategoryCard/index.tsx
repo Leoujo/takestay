@@ -26,8 +26,9 @@ export const CategoryCard: React.FC<Props> = ({ category }) => {
         </RowContainer>
       </AccordionSummary>
       <AccordionDetails sx={{ p: "10px 0" }}>
-        <ItemCard />
-        <ItemCard />
+        {category.items.map((item) => (
+          <ItemCard item={item} />
+        ))}
 
         <Box margin="0 20px">
           <Button color="primary" startIcon={<AddIcon />} variant="outlined" fullWidth>

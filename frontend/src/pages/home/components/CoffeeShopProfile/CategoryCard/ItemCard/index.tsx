@@ -3,15 +3,20 @@ import { Box } from "@mui/material";
 import { ColumnContainer, Image, RowContainer } from "../../../../../../common/styles";
 import CoffeeSample from "../../../../../../assets/images/coffee-sample.png";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
+import { Item } from "../../../../../../common/models";
 
-export const ItemCard = () => {
+interface Props {
+  item: Item;
+}
+
+export const ItemCard: React.FC<Props> = ({ item }) => {
   return (
     <Box borderTop="1px solid #F3F3F3" padding="10px">
       <RowContainer align="flex-start" justify="space-between">
         <Image src={CoffeeSample} width="60px" />
         <ColumnContainer align="flex-start">
           <Typography gutterBottom variant="body1" component="div">
-            House's expresso
+            {item.name}
           </Typography>
           <Typography variant="caption" color="text.secondary">
             The good and old expresso coffee.
