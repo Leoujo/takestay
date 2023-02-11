@@ -26,8 +26,8 @@ export const CategoryCard: React.FC<Props> = ({ category }) => {
         </RowContainer>
       </AccordionSummary>
       <AccordionDetails sx={{ p: "10px 0" }}>
-        {category.items.map((item) => (
-          <ItemCard item={item} />
+        {category.items.map((item, key) => (
+          <ItemCard item={item} key={key} />
         ))}
 
         <Box margin="0 20px">

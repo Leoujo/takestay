@@ -19,5 +19,6 @@ export interface Category {
 
 export interface Item {
   name: string;
-  category: number;
+  description: string;
+  price: number;
 }

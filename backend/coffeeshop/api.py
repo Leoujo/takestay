@@ -13,18 +13,25 @@ class OkSchema(Schema):
 class ItemSchema(ModelSchema):
     class Config:
         model = Item
-        model_fields = ["name"]
+        model_fields = "__all__"
 
 
 # COFFEE SHOPS -----------------------------------------------------------------------
+
+
+class CreateCategorySchema(ModelSchema):
+    class Config:
+        model = Category
+        model_fields = ["name"]
+
+
 class CategorySchema(ModelSchema):
     class Config:
         model = Category
-        model_fields = ["name", "id", "items"]
+        model_fields = ["name", "items"]
 
 
 class NestedCategorySchema(Schema):
-    id: str
     name: str
     items: list[ItemSchema]
 
@@ -72,7 +79,7 @@ def create_coffeeshop(request, payload: CreateCoffeeshopSchema):
 
 # Create category by coffee shop id
 @router.post("/category/{ownerId}/", response={201: CoffeeshopSchema})
-def create_category(request, ownerId, payload: CategorySchema):
+def create_category(request, ownerId, payload: CreateCategorySchema):
     print("--> Creating new category")
     new_category = Category.objects.create(name=payload.name)
     print("--> Getting the coffeeshop")

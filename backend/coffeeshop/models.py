@@ -4,7 +4,8 @@ from owner.models import Owner
 
 class Item(models.Model):
     name = models.CharField(max_length=255)
-    # category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    description = models.CharField(max_length=255, default="")
+    price = models.DecimalField(max_digits=100, decimal_places=2, default=0)
 
 
 class Category(models.Model):
