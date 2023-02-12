@@ -4,12 +4,11 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useMutation } from "react-query";
 import { createCategory, createCoffeeShop, createItem } from "../../../api/services/coffeeshops";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import { LinearProgress } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Item } from "../../models";
@@ -25,8 +24,6 @@ export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
   const [coffeeShopName, setCoffeeShopName] = React.useState("");
   const [categoryName, setCategoryName] = React.useState("");
   const [itemObject, setItemObject] = React.useState<Item>({ name: "", description: "", price: 0 });
-
-  const dispatch = useDispatch<AppDispatch>();
 
   const { id: ownerId } = useSelector((state: RootState) => state.user);
 
@@ -64,7 +61,7 @@ export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
   return (
     <>
       <Button startIcon={<AddIcon />} variant="outlined" onClick={handleClickOpen}>
-        New {type}
+        {type}
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle> Creating {type}</DialogTitle>

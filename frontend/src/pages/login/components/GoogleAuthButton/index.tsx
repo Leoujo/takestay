@@ -14,7 +14,7 @@ import { Snackbars } from "../../../../common/components/Snackbar";
 export const GoogleAuthButton = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const clientId = "462298908679-1ibtb17o03qgjr5scbdm9ul963oj4nfr.apps.googleusercontent.com";
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   useEffect(() => {
     const initClient = () => {
@@ -49,7 +49,7 @@ export const GoogleAuthButton = () => {
       <Snackbars isError={isError} />
       <Box margin="20px 0">
         <GoogleLogin
-          clientId={clientId}
+          clientId={clientId ? clientId : ""}
           buttonText="Sign in with Google"
           onSuccess={(res) => mutateAsync(res)}
           onFailure={onFailure}
