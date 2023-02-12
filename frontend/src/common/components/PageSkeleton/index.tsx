@@ -1,13 +1,15 @@
-import { Skeleton } from "@mui/material";
-import React from "react";
+import { Box, Skeleton } from "@mui/material";
 
 export const PageSkeleton = () => {
   return (
-    <>
-      <Skeleton variant="rectangular" height={50} sx={{ marginBottom: 1 }} />
-      <Skeleton variant="rectangular" height={60} sx={{ marginBottom: 1 }} />
-      <Skeleton variant="rectangular" height={30} sx={{ margin: 2 }} />
-      <Skeleton variant="rectangular" height={200} sx={{ margin: 2 }} />
-    </>
+    <Box marginTop="10px">
+      <Skeleton variant="circular" height={50} width={50} />
+      <Skeleton variant="rectangular" height={60} sx={{ m: "10px 0" }} />
+      <Skeleton variant="rectangular" height={50} sx={{ m: "10px 0" }} />
+      <Skeleton variant="rectangular" height={50} sx={{ m: "10px 0" }} />
+      <Skeleton variant="rectangular" height={50} sx={{ m: "10px 0" }} />
+      <Skeleton variant="rectangular" height={50} sx={{ m: "10px 0" }} />
+      <Skeleton variant="rectangular" height={50} sx={{ m: "10px 0" }} />
+    </Box>
   );
 };

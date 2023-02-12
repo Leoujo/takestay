@@ -10,7 +10,9 @@ export const Navbar = () => {
   return (
     <AppBar position="sticky">
       <Toolbar>
-        <MenuDrawer />
+        <Box position="absolute">
+          <MenuDrawer />
+        </Box>
         <RowContainer>
           <Box component="img" src={Logo} />
         </RowContainer>

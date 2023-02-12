@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CoffeeShop } from "../../common/models";
 
+// I'm not using this slice for now.
 const initialState: CoffeeShop = {
   name: "",
   owner_id: "",

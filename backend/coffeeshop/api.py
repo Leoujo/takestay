@@ -37,18 +37,6 @@ def create_category(request, categoryId):
     return items
 
 
-# @router.post("/category/{ownerId}/", response={201: CoffeeshopSchema})
-# def create_category(request, ownerId, payload: CreateCategorySchema):
-#     print("--> Creating new category")
-#     new_category = Category.objects.create(name=payload.name)
-#     print("--> Getting the coffeeshop")
-#     coffeeshop = Coffeeshop.objects.get(owner__id=ownerId)
-#     print("--> Adding the category to the coffeeshop")
-#     coffeeshop.categories.add(new_category)
-
-#     return 201, coffeeshop
-
-
 # COFFEE SHOPS -----------------------------------------------------------------------
 
 
@@ -56,12 +44,6 @@ class CreateCategorySchema(ModelSchema):
     class Config:
         model = Category
         model_fields = ["name"]
-
-
-class CategorySchema(ModelSchema):
-    class Config:
-        model = Category
-        model_fields = ["name", "items", "id"]
 
 
 class NestedCategorySchema(Schema):
@@ -131,11 +113,3 @@ def create_category(request, ownerId, payload: CreateCategorySchema):
     coffeeshop.categories.add(new_category)
 
     return 201, coffeeshop
-
-
-# Get all possible categories
-@router.get("/category", response=list[CategorySchema])
-def create_category(request):
-    print("--> Looking for all available categories")
-    categories = Category.objects.all()
-    return categories

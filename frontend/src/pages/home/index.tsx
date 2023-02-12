@@ -8,15 +8,19 @@ import { NoCoffeeShop } from "./components/NoCoffeeShop";
 import { PageSkeleton } from "../../common/components/PageSkeleton/index";
 import { useEffect } from "react";
 import { setCoffeeShop } from "../../store/slices/coffeeShopSlice";
+import { Container } from "@mui/system";
+import { useNavigate } from "react-router";
 
 export const Home = () => {
   const { id: ownerId, name: ownerName } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { data, refetch, isFetching } = useQuery(["ownerCoffeeshop"], () => getCoffeeShop(ownerId), {
     retry: false,
     enabled: false,
     onSuccess: (coffeeShop) => dispatch(setCoffeeShop(coffeeShop)),
+    onError: () => navigate("/"),
   });
 
   // FIX: Check why this is necessary
@@ -24,14 +28,20 @@ export const Home = () => {
     refetch();
   }, []);
 
-  if (isFetching) {
-    return <PageSkeleton />;
-  }
+  const pageStateHandler = () => {
+    if (isFetching) {
+      return <PageSkeleton />;
+    } else if (data) {
+      return <CoffeeShopProfile coffeeShop={data} ownerName={ownerName} refetch={refetch} />;
+    } else {
+      <NoCoffeeShop refetch={refetch} />;
+    }
+  };
 
   return (
     <>
       <Navbar />
-      {data ? <CoffeeShopProfile coffeeShop={data} ownerName={ownerName} refetch={refetch} /> : <NoCoffeeShop refetch={refetch} />}
+      <Container maxWidth="sm">{pageStateHandler()}</Container>
     </>
   );
 };

@@ -8,7 +8,7 @@ import { GoogleAuthButton } from "./components/GoogleAuthButton";
 export const Login = () => {
   return (
     <Background>
-      <ColumnContainer paddingTop="30px">
+      <ColumnContainer padding="30px 20px">
         <Image src={Logo} width="200px" />
         <Box>
           <SplashText variant="h2">{messages.brand}</SplashText>

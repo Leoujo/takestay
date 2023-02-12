@@ -2,7 +2,6 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { ColumnContainer, Image, RowContainer } from "../../../../../../common/styles";
 import CoffeeSample from "../../../../../../assets/images/coffee-sample.png";
-// import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import { Item } from "../../../../../../common/models";
 
 interface Props {

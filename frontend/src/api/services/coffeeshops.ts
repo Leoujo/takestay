@@ -26,8 +26,9 @@ export const createCategory = async (name: string, ownerId: string) => {
   return categoryData.data;
 };
 
+// Fix: delete doesn't work (axios error)
 export const deleteCategory = async (categoryId: number | undefined) => {
-  let response = axiosClient.delete(`/coffeeshops/category/${categoryId}`);
+  let response = await axiosClient.delete(`/coffeeshops/category/${categoryId}`);
   return response;
 };
 

@@ -1,7 +1,6 @@
-import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, withStyles } from "@mui/material";
+import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box } from "@mui/system";
 import Logo from "../../../../assets/brand/logo.png";
 import { Background, ColumnContainer, Image } from "../../../styles";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -29,7 +28,9 @@ export const MenuDrawer: React.FC = () => {
 
   return (
     <>
-      <MenuIcon onClick={handleDrawerToggle} />
+      <ListItemButton>
+        <MenuIcon onClick={handleDrawerToggle} />
+      </ListItemButton>
       <Drawer anchor="left" open={isDrawerOpen} onClose={handleDrawerToggle}>
         <Background>
           <ColumnContainer justify="flex-start" margin="10px 0">
