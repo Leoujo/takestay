@@ -19,7 +19,6 @@ export const Home = () => {
   const { data, refetch, isFetching } = useQuery(["ownerCoffeeshop"], () => getCoffeeShop(ownerId), {
     retry: false,
     enabled: false,
-    onSuccess: (coffeeShop) => dispatch(setCoffeeShop(coffeeShop)),
     onError: () => navigate("/"),
   });
 
@@ -28,13 +27,15 @@ export const Home = () => {
     refetch();
   }, []);
 
+  if (isFetching) {
+    return <PageSkeleton />;
+  }
+
   const pageStateHandler = () => {
-    if (isFetching) {
-      return <PageSkeleton />;
-    } else if (data) {
+    if (data) {
       return <CoffeeShopProfile coffeeShop={data} ownerName={ownerName} refetch={refetch} />;
     } else {
-      <NoCoffeeShop refetch={refetch} />;
+      return <NoCoffeeShop refetch={refetch} />;
     }
   };
 
