@@ -60,17 +60,17 @@ export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
   // Fix: Use react hook form and yup resolver
   return (
     <>
-      <Button startIcon={<AddIcon />} variant="outlined" onClick={handleClickOpen}>
-        {type}
+      <Button startIcon={<AddIcon />} onClick={handleClickOpen}>
+        Add {type}
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle> Creating {type}</DialogTitle>
         <DialogContent>
           {type === "coffeeShop" && (
-            <TextField onChange={(e) => setCoffeeShopName(e.target.value)} label="Name" margin="dense" variant="outlined" autoFocus fullWidth />
+            <TextField onChange={(e) => setCoffeeShopName(e.target.value)} label="Name" margin="dense" variant="outlined" fullWidth />
           )}
           {type === "category" && (
-            <TextField onChange={(e) => setCategoryName(e.target.value)} label="Name" margin="dense" variant="outlined" autoFocus fullWidth />
+            <TextField onChange={(e) => setCategoryName(e.target.value)} label="Name" margin="dense" variant="outlined" fullWidth />
           )}
           {type === "item" && (
             <>
@@ -79,6 +79,9 @@ export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
                 label="Name"
                 margin="dense"
                 variant="outlined"
+                onKeyDown={(event) => {
+                  event.stopPropagation();
+                }}
                 fullWidth
               />
               <TextField
@@ -86,6 +89,9 @@ export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
                 label="Description"
                 margin="dense"
                 variant="outlined"
+                onKeyDown={(event) => {
+                  event.stopPropagation();
+                }}
                 fullWidth
               />
               <TextField
@@ -93,6 +99,9 @@ export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
                 label="Price"
                 margin="dense"
                 variant="outlined"
+                onKeyDown={(event) => {
+                  event.stopPropagation();
+                }}
                 fullWidth
               />
             </>
