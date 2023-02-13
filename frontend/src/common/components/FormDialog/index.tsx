@@ -12,30 +12,45 @@ import { RootState } from "../../../store/store";
 import { LinearProgress } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Item } from "../../models";
-
+import { Box } from "@mui/system";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 interface Props {
   type: "coffeeShop" | "category" | "item";
   categoryId?: number;
   refetch: () => void;
 }
 
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  description: yup.string(),
+  price: yup.number(),
+});
+
 export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
   const [open, setOpen] = React.useState(type === "coffeeShop");
-  const [coffeeShopName, setCoffeeShopName] = React.useState("");
-  const [categoryName, setCategoryName] = React.useState("");
-  const [itemObject, setItemObject] = React.useState<Item>({ name: "", description: "", price: 0 });
+
+  const {
+    register,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Item>({
+    resolver: yupResolver(schema),
+  });
 
   const { id: ownerId } = useSelector((state: RootState) => state.user);
 
-  const { mutate: mutateCoffeeShop, isLoading: loadingCoffeeShop } = useMutation(() => createCoffeeShop(coffeeShopName, ownerId), {
+  const { mutate: mutateCoffeeShop, isLoading: loadingCoffeeShop } = useMutation(() => createCoffeeShop(getValues("name"), ownerId), {
     onSuccess: () => refetch(),
   });
 
-  const { mutate: mutateCategory, isLoading: loadingCategory } = useMutation(() => createCategory(categoryName, ownerId), {
+  const { mutate: mutateCategory, isLoading: loadingCategory } = useMutation(() => createCategory(getValues("name"), ownerId), {
     onSuccess: () => refetch(),
   });
 
-  const { mutate: mutateItem, isLoading: loadingItem } = useMutation(() => createItem(categoryId, itemObject), {
+  const { mutate: mutateItem, isLoading: loadingItem } = useMutation(() => createItem(getValues(), categoryId), {
     onSuccess: () => refetch(),
   });
 
@@ -47,14 +62,10 @@ export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
     setOpen(false);
   };
 
-  const handleCreate = () => {
-    if (type === "category") {
-      mutateCategory();
-    } else if (type === "coffeeShop") {
-      mutateCoffeeShop();
-    } else if (type === "item") {
-      mutateItem();
-    }
+  const onSubmit = () => {
+    if (type === "category") mutateCategory();
+    if (type === "coffeeShop") mutateCoffeeShop();
+    if (type === "item") mutateItem();
   };
 
   // Fix: Use react hook form and yup resolver
@@ -64,57 +75,61 @@ export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
         Add {type}
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle> Creating {type}</DialogTitle>
-        <DialogContent>
-          {type === "coffeeShop" && (
-            <TextField onChange={(e) => setCoffeeShopName(e.target.value)} label="Name" margin="dense" variant="outlined" fullWidth />
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+          <DialogTitle> Creating {type}</DialogTitle>
+          <DialogContent>
+            <TextField
+              {...register("name")}
+              label="Name"
+              margin="dense"
+              variant="outlined"
+              onKeyDown={(event) => {
+                event.stopPropagation();
+              }}
+              error={!!errors.name}
+              helperText={errors.name?.message}
+              fullWidth
+            />
+            {type === "item" && (
+              <>
+                <TextField
+                  {...register("description")}
+                  label="Description"
+                  margin="dense"
+                  variant="outlined"
+                  onKeyDown={(event) => {
+                    event.stopPropagation();
+                  }}
+                  error={!!errors.description}
+                  helperText={errors.description?.message}
+                  fullWidth
+                />
+                <TextField
+                  {...register("price")}
+                  label="Price"
+                  margin="dense"
+                  variant="outlined"
+                  onKeyDown={(event) => {
+                    event.stopPropagation();
+                  }}
+                  error={!!errors.price}
+                  helperText={errors.price?.message}
+                  fullWidth
+                  // Specific for this
+                  type="number"
+                />
+              </>
+            )}
+          </DialogContent>
+          {loadingCoffeeShop || loadingCategory || loadingItem ? (
+            <LinearProgress />
+          ) : (
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button type="submit" /*onClick={() => handleCreate()}*/>Create</Button>
+            </DialogActions>
           )}
-          {type === "category" && (
-            <TextField onChange={(e) => setCategoryName(e.target.value)} label="Name" margin="dense" variant="outlined" fullWidth />
-          )}
-          {type === "item" && (
-            <>
-              <TextField
-                onChange={(e) => setItemObject({ ...itemObject, name: e.target.value })}
-                label="Name"
-                margin="dense"
-                variant="outlined"
-                onKeyDown={(event) => {
-                  event.stopPropagation();
-                }}
-                fullWidth
-              />
-              <TextField
-                onChange={(e) => setItemObject({ ...itemObject, description: e.target.value })}
-                label="Description"
-                margin="dense"
-                variant="outlined"
-                onKeyDown={(event) => {
-                  event.stopPropagation();
-                }}
-                fullWidth
-              />
-              <TextField
-                onChange={(e) => setItemObject({ ...itemObject, price: parseInt(e.target.value) })}
-                label="Price"
-                margin="dense"
-                variant="outlined"
-                onKeyDown={(event) => {
-                  event.stopPropagation();
-                }}
-                fullWidth
-              />
-            </>
-          )}
-        </DialogContent>
-        {loadingCoffeeShop || loadingCategory || loadingItem ? (
-          <LinearProgress />
-        ) : (
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={() => handleCreate()}>Create</Button>
-          </DialogActions>
-        )}
+        </Box>
       </Dialog>
     </>
   );

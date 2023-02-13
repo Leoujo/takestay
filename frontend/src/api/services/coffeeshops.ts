@@ -38,7 +38,7 @@ export const getItemsFromCategory = async (categoryId: number): Promise<Item[]> 
   return itemsData.data;
 };
 
-export const createItem = async (categoryId: number | undefined, itemObject: Item) => {
+export const createItem = async (itemObject: Item, categoryId: number | undefined) => {
   let categoryData = await axiosClient.post(`/coffeeshops/item/${categoryId}/`, itemObject);
   return categoryData.data;
 };
