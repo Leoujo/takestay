@@ -29,7 +29,7 @@ export const GoogleAuthButton = () => {
     // should store token id on cookies
     const { data } = mutateData;
     dispatch(loginOwner(data));
-    navigate("/home");
+    navigate("/menu");
   }
 
   const onFailure = (err: any) => {

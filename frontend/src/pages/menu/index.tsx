@@ -11,7 +11,7 @@ import { setCoffeeShop } from "../../store/slices/coffeeShopSlice";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router";
 
-export const Home = () => {
+export const Menu = () => {
   const { id: ownerId, name: ownerName } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();

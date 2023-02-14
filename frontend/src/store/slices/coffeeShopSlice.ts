@@ -4,7 +4,8 @@ import { CoffeeShop } from "../../common/models";
 // I'm not using this slice for now.
 const initialState: CoffeeShop = {
   name: "",
-  owner_id: "",
+  isEditable: false,
+  ownerId: "",
   categories: [],
 };
 
@@ -14,13 +15,16 @@ const coffeeShopSlice = createSlice({
   reducers: {
     setCoffeeShop: (state, action) => {
       state.name = action.payload.name;
-      state.owner_id = action.payload.owner_id;
+      state.ownerId = action.payload.owner_id;
       state.categories = action.payload.categories;
+    },
+    setViewOnlyToggle: (state) => {
+      state.isEditable = !state.isEditable;
     },
     resetCoffeeShop: () => initialState,
   },
 });
 
-export const { setCoffeeShop, resetCoffeeShop } = coffeeShopSlice.actions;
+export const { setCoffeeShop, setViewOnlyToggle, resetCoffeeShop } = coffeeShopSlice.actions;
 
 export default coffeeShopSlice.reducer;

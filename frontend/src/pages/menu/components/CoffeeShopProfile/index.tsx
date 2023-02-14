@@ -6,6 +6,11 @@ import { Image, RowContainer } from "../../../../common/styles";
 import { CategoryCard } from "./CategoryCard";
 import { CoffeeShop } from "../../../../common/models";
 import { FormDialog } from "../../../../common/components/FormDialog";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useDispatch, useSelector } from "react-redux";
+import { setViewOnlyToggle } from "../../../../store/slices/coffeeShopSlice";
+import { RootState } from "../../../../store/store";
 
 interface Props {
   coffeeShop: CoffeeShop;
@@ -14,6 +19,14 @@ interface Props {
 }
 
 export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, ownerName, refetch }) => {
+  const dispatch = useDispatch();
+
+  const { isEditable } = useSelector((state: RootState) => state.coffeeShop);
+
+  const visibilityHandler = () => {
+    dispatch(setViewOnlyToggle());
+  };
+
   return (
     <>
       <RowContainer padding="10px 0">
@@ -28,6 +41,11 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, ownerName, refe
             </Typography>
           </Box>
         </RowContainer>
+        {isEditable ? (
+          <VisibilityIcon color="primary" onClick={visibilityHandler} />
+        ) : (
+          <VisibilityOffIcon color="primary" onClick={visibilityHandler} />
+        )}
       </RowContainer>
 
       <Divider />
@@ -36,11 +54,11 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, ownerName, refe
           <Typography color="primary" variant="h6">
             Menu
           </Typography>
-          <FormDialog type="category" refetch={refetch} />
+          {isEditable && <FormDialog type="category" refetch={refetch} />}
         </RowContainer>
       </Container>
       {coffeeShop.categories?.map((category, key) => (
-        <CategoryCard category={category} refetch={refetch} key={key} />
+        <CategoryCard isEditable={isEditable} category={category} refetch={refetch} key={key} />
       ))}
     </>
   );

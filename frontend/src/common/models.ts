@@ -7,7 +7,8 @@ export interface Owner {
 
 export interface CoffeeShop {
   name: string;
-  owner_id: string;
+  isEditable: boolean;
+  ownerId: string;
   categories: Category[];
 }
 
