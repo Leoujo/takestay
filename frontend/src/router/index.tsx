@@ -13,6 +13,7 @@ import { RootState } from "../store/store";
 
 export const Router = () => {
   const { user } = useSelector((state: RootState) => state);
+
   //   const navigate = useNavigate();
 
   // Get all coffee shops
@@ -22,7 +23,6 @@ export const Router = () => {
     isFetching: coffeeShopsIsFetching,
   } = useQuery(["allCoffeeShops"], (): Promise<CoffeeShop[]> => getAllCoffeeShops(), {
     retry: false,
-    enabled: false,
   });
 
   // Get coffee shop by a owner
@@ -51,8 +51,9 @@ export const Router = () => {
           element={<Menu coffeeShop={coffeeShopByOwner} isFetching={coffeeShopByOwnerIsFetching} refetch={coffeeShopByOwnerRefetch} />}
         />
         <Route path="/qrcode" element={<QrCode />} />
-        {coffeeShops?.map((coffeeShop) => (
+        {coffeeShops?.map((coffeeShop, key) => (
           <Route
+            key={key}
             path={`/${removeSpacesAndAccents(coffeeShop.name)}`}
             element={<Menu coffeeShop={coffeeShop} isFetching={coffeeShopsIsFetching} refetch={coffeeShopsRefetch} />}
           />

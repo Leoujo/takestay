@@ -9,7 +9,7 @@ export const getCoffeeShop = async (ownerId: string) => {
 };
 
 export const getAllCoffeeShops = async () => {
-  let coffeeShopData = await axiosClient.get(`/coffeeshops`);
+  let coffeeShopData = await axiosClient.get(`/coffeeshops/`);
 
   return coffeeShopData.data;
 };

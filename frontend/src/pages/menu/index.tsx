@@ -9,7 +9,6 @@ import { PageSkeleton } from "../../common/components/PageSkeleton/index";
 import { useEffect } from "react";
 import { setCoffeeShop } from "../../store/slices/coffeeShopSlice";
 import { Container } from "@mui/system";
-import { useNavigate } from "react-router";
 import { CoffeeShop } from "../../common/models";
 
 interface Props {
