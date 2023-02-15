@@ -14,11 +14,10 @@ import { RootState } from "../../../../store/store";
 
 interface Props {
   coffeeShop: CoffeeShop;
-  ownerName: string;
   refetch: () => void;
 }
 
-export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, ownerName, refetch }) => {
+export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, refetch }) => {
   const dispatch = useDispatch();
 
   const { isEditable } = useSelector((state: RootState) => state.coffeeShop);
@@ -36,9 +35,9 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, ownerName, refe
             <Typography color="primary" variant="h5">
               {coffeeShop.name}
             </Typography>
-            <Typography variant="body2" color="grey">
+            {/* <Typography variant="body2" color="grey">
               By {ownerName}
-            </Typography>
+            </Typography> */}
           </Box>
         </RowContainer>
         {isEditable ? (

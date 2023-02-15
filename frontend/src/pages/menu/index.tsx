@@ -10,30 +10,22 @@ import { useEffect } from "react";
 import { setCoffeeShop } from "../../store/slices/coffeeShopSlice";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router";
+import { CoffeeShop } from "../../common/models";
 
-export const Menu = () => {
-  const { id: ownerId, name: ownerName } = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+interface Props {
+  coffeeShop?: CoffeeShop;
+  isFetching: boolean;
+  refetch: () => void;
+}
 
-  const { data, refetch, isFetching } = useQuery(["ownerCoffeeshop"], () => getCoffeeShop(ownerId), {
-    retry: false,
-    enabled: false,
-    onError: () => navigate("/"),
-  });
-
-  // FIX: Check why this is necessary
-  useEffect(() => {
-    refetch();
-  }, []);
-
+export const Menu: React.FC<Props> = ({ coffeeShop, isFetching, refetch }) => {
   if (isFetching) {
     return <PageSkeleton />;
   }
 
   const pageStateHandler = () => {
-    if (data) {
-      return <CoffeeShopProfile coffeeShop={data} ownerName={ownerName} refetch={refetch} />;
+    if (coffeeShop) {
+      return <CoffeeShopProfile coffeeShop={coffeeShop} refetch={refetch} />;
     } else {
       return <NoCoffeeShop refetch={refetch} />;
     }

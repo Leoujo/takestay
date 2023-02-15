@@ -80,6 +80,14 @@ def get_single_coffeeshop(request, userId):
     return 200, coffeeshop
 
 
+# Get all coffee shops
+@router.get("/", response=list[NestedCoffeeshopSchema])
+def get_all_coffeeshops(request):
+    print("--> Searching all coffee shops")
+    coffee_shops = Coffeeshop.objects.all()
+    return coffee_shops
+
+
 # Create one coffee shop linked to an user id
 @router.post("/", response={201: CoffeeshopSchema})
 def create_coffeeshop(request, payload: CreateCoffeeshopSchema):

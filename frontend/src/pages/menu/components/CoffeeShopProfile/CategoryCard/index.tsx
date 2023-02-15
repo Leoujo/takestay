@@ -14,7 +14,7 @@ import { useState } from "react";
 
 interface Props {
   category: Category;
-  isEditable: boolean;
+  isEditable?: boolean;
   refetch: () => void;
 }
 

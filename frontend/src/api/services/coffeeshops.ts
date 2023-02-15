@@ -8,6 +8,12 @@ export const getCoffeeShop = async (ownerId: string) => {
   return coffeeShopData.data[0];
 };
 
+export const getAllCoffeeShops = async () => {
+  let coffeeShopData = await axiosClient.get(`/coffeeshops`);
+
+  return coffeeShopData.data;
+};
+
 export const createCoffeeShop = async (name: string, ownerId: string) => {
   const payload = {
     name: name,
