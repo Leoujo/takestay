@@ -15,9 +15,10 @@ import { RootState } from "../../../../store/store";
 interface Props {
   coffeeShop: CoffeeShop;
   refetch: () => void;
+  isPublic?: boolean;
 }
 
-export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, refetch }) => {
+export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, refetch, isPublic }) => {
   const dispatch = useDispatch();
 
   const { isEditable } = useSelector((state: RootState) => state.coffeeShop);
