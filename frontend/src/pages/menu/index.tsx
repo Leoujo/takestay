@@ -24,6 +24,7 @@ export const Menu: React.FC<Props> = ({ coffeeShop, isFetching, refetch }) => {
 
   const pageStateHandler = () => {
     if (coffeeShop) {
+      console.log(coffeeShop);
       return <CoffeeShopProfile coffeeShop={coffeeShop} refetch={refetch} />;
     } else {
       return <NoCoffeeShop refetch={refetch} />;
