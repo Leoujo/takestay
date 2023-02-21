@@ -27,6 +27,16 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, refetch, isPubl
     dispatch(setViewOnlyToggle());
   };
 
+  const iconHandler = () => {
+    if (!isPublic) {
+      return isEditable ? (
+        <VisibilityIcon color="primary" onClick={visibilityHandler} />
+      ) : (
+        <VisibilityOffIcon color="primary" onClick={visibilityHandler} />
+      );
+    }
+  };
+
   return (
     <>
       <RowContainer padding="10px 0">
@@ -41,11 +51,7 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, refetch, isPubl
             </Typography> */}
           </Box>
         </RowContainer>
-        {isEditable ? (
-          <VisibilityIcon color="primary" onClick={visibilityHandler} />
-        ) : (
-          <VisibilityOffIcon color="primary" onClick={visibilityHandler} />
-        )}
+        {iconHandler()}
       </RowContainer>
 
       <Divider />
@@ -54,11 +60,11 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, refetch, isPubl
           <Typography color="primary" variant="h6">
             Menu
           </Typography>
-          {isEditable && <FormDialog type="category" refetch={refetch} />}
+          {isEditable && !isPublic && <FormDialog type="category" refetch={refetch} />}
         </RowContainer>
       </Container>
       {coffeeShop.categories?.map((category, key) => (
-        <CategoryCard isEditable={isEditable} category={category} refetch={refetch} key={key} />
+        <CategoryCard isEditable={isEditable} category={category} refetch={refetch} isPublic={isPublic} key={key} />
       ))}
     </>
   );

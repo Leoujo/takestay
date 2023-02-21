@@ -15,17 +15,17 @@ interface Props {
   coffeeShop?: CoffeeShop;
   isFetching: boolean;
   refetch: () => void;
+  isPublic?: boolean;
 }
 
-export const Menu: React.FC<Props> = ({ coffeeShop, isFetching, refetch }) => {
+export const Menu: React.FC<Props> = ({ coffeeShop, isFetching, refetch, isPublic }) => {
   if (isFetching) {
     return <PageSkeleton />;
   }
 
   const pageStateHandler = () => {
     if (coffeeShop) {
-      console.log(coffeeShop);
-      return <CoffeeShopProfile coffeeShop={coffeeShop} refetch={refetch} />;
+      return <CoffeeShopProfile isPublic={isPublic} coffeeShop={coffeeShop} refetch={refetch} />;
     } else {
       return <NoCoffeeShop refetch={refetch} />;
     }
@@ -33,7 +33,7 @@ export const Menu: React.FC<Props> = ({ coffeeShop, isFetching, refetch }) => {
 
   return (
     <>
-      <Navbar />
+      <Navbar isPublic={isPublic} />
       <Container maxWidth="sm">{pageStateHandler()}</Container>
     </>
   );

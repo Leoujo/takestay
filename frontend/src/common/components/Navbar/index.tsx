@@ -6,13 +6,19 @@ import Logo from "../../../assets/brand/logo.png";
 import { RowContainer } from "../../styles";
 import { MenuDrawer } from "./MenuDrawer";
 
-export const Navbar = () => {
+interface Props {
+  isPublic?: boolean;
+}
+
+export const Navbar: React.FC<Props> = ({ isPublic }) => {
   return (
     <AppBar position="sticky">
       <Toolbar>
-        <Box position="absolute">
-          <MenuDrawer />
-        </Box>
+        {!isPublic && (
+          <Box position="absolute">
+            <MenuDrawer />
+          </Box>
+        )}
         <RowContainer>
           <Box component="img" src={Logo} />
         </RowContainer>

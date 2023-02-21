@@ -33,7 +33,6 @@ export const Router = () => {
   } = useQuery(["CoffeeShopByOwner"], (): Promise<CoffeeShop> => getCoffeeShop(user.id), {
     retry: false,
     enabled: false,
-    //  onError: () => navigate("/"),
   });
 
   useEffect(() => {
@@ -55,7 +54,7 @@ export const Router = () => {
           <Route
             key={key}
             path={`/${removeSpacesAndAccents(coffeeShop.name)}`}
-            element={<Menu coffeeShop={coffeeShop} isFetching={coffeeShopsIsFetching} refetch={coffeeShopsRefetch} />}
+            element={<Menu coffeeShop={coffeeShop} isFetching={coffeeShopsIsFetching} refetch={coffeeShopsRefetch} isPublic />}
           />
         ))}
       </Routes>

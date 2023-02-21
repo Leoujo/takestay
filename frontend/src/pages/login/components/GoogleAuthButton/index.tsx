@@ -4,13 +4,10 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../store/store";
 import { loginOwner } from "../../../../store/slices/userSlice";
 import { loginOrCreateOwner } from "../../../../api/services/owners";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { LinearProgress } from "@mui/material";
 import { Snackbars } from "../../../../common/components/Snackbar";
 import { GoogleLogin } from "@react-oauth/google";
-import { axiosClient } from "../../../../api/axios";
-import { googleLogin } from "../../../../api/services/googleApi";
-import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 
 export const GoogleAuthButton = () => {

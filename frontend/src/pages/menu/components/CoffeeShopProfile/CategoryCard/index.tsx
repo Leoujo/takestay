@@ -16,11 +16,12 @@ interface Props {
   category: Category;
   isEditable?: boolean;
   refetch: () => void;
+  isPublic?: boolean;
 }
 
-export const CategoryCard: React.FC<Props> = ({ isEditable, category, refetch }) => {
+export const CategoryCard: React.FC<Props> = ({ isEditable, category, refetch, isPublic }) => {
   // If is not on edit mode, expand is initially true for all categories.
-  const [expanded, setExpanded] = useState(!isEditable);
+  const [expanded, setExpanded] = useState(isPublic);
   const handleChange = () => {
     setExpanded(!expanded);
   };
@@ -34,7 +35,7 @@ export const CategoryCard: React.FC<Props> = ({ isEditable, category, refetch })
 
             <ExpandMoreIcon color="primary" />
           </RowContainer>
-          {isEditable && <MenuList refetch={refetch} categoryId={category.id} />}
+          <Box onClick={(e) => e.stopPropagation()}>{isEditable && !isPublic && <MenuList refetch={refetch} categoryId={category.id} />}</Box>
         </RowContainer>
       </AccordionSummary>
       <AccordionDetails sx={{ p: "10px 0" }}>
