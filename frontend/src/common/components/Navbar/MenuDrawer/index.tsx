@@ -37,7 +37,7 @@ export const MenuDrawer: React.FC = () => {
             <Image src={Logo} width="150px" />
           </ColumnContainer>
           <List sx={{ color: "white" }}>
-            <ListItem disablePadding onClick={() => navigate("/home")}>
+            <ListItem disablePadding onClick={() => navigate("/menu")}>
               <ListItemButton>
                 <ListItemIcon sx={{ color: "white" }}>
                   <MenuBookIcon />

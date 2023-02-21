@@ -2,10 +2,9 @@ import { Container } from "@mui/system";
 import QRCode from "react-qr-code";
 import { useSelector } from "react-redux";
 import { Navbar } from "../../common/components/Navbar";
-import { ColumnContainer, Image } from "../../common/styles";
+import { ColumnContainer } from "../../common/styles";
 import { RootState } from "../../store/store";
 import { removeSpacesAndAccents } from "../../utils";
-// import QRCode from "../../assets/images/qrcode-sample.png";
 
 export const QrCode = () => {
   const { name } = useSelector((state: RootState) => state.coffeeShop);

@@ -3,7 +3,6 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import { FormDialog } from "../FormDialog";
 import { useMutation } from "react-query";
 import { deleteCategory } from "../../../api/services/coffeeshops";
@@ -38,7 +37,7 @@ export const MenuList: React.FC<Props> = ({ refetch, categoryId }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const { mutate, isLoading } = useMutation(() => deleteCategory(categoryId), {
+  const { mutate } = useMutation(() => deleteCategory(categoryId), {
     onSuccess: () => refetch(),
     onError: (err) => console.log(err),
   });

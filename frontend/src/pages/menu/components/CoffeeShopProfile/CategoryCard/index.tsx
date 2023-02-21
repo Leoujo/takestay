@@ -8,7 +8,6 @@ import { ItemCard } from "./ItemCard";
 import { RowContainer } from "../../../../../common/styles";
 import { Box } from "@mui/system";
 import { Category } from "../../../../../common/models";
-import { FormDialog } from "../../../../../common/components/FormDialog";
 import { MenuList } from "../../../../../common/components/MenuList";
 import { useState } from "react";
 
