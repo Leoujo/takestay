@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
@@ -35,11 +34,9 @@ export const Router = () => {
     enabled: false,
   });
 
-  useEffect(() => {
-    if (user.id) {
-      coffeeShopByOwnerRefetch();
-    }
-  }, [user.id]);
+  if (user.id) {
+    coffeeShopByOwnerRefetch();
+  }
 
   return (
     <BrowserRouter>
