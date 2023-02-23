@@ -30,13 +30,9 @@ export const Router = () => {
     refetch: coffeeShopByOwnerRefetch,
     isFetching: coffeeShopByOwnerIsFetching,
   } = useQuery(["CoffeeShopByOwner"], (): Promise<CoffeeShop> => getCoffeeShop(user.id), {
-    retry: false,
+    retry: !!user.id,
     enabled: false,
   });
-
-  if (user.id) {
-    coffeeShopByOwnerRefetch();
-  }
 
   return (
     <BrowserRouter>
