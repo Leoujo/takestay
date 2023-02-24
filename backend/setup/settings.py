@@ -70,13 +70,26 @@ WSGI_APPLICATION = "setup.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# LOCALHOST
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "takestay",
+#         "USER": "postgres",
+#         "PASSWORD": "postgres",
+#         "HOST": "localhost",
+#     }
+# }
+
+# PRODUCTION
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "takestay",
+        "NAME": "railway",
         "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "localhost",
+        "PASSWORD": "WFcTy4xPJJUkHj9XGSI5",
+        "HOST": "containers-us-west-49.railway.app",
+        "PORT": "8004",
     }
 }
 
