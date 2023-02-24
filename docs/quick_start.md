@@ -1,32 +1,32 @@
 # Local Setup
 
-### Clone repository and go to the backend folder
+### Clone repository
 
 `git clone https://github.com/Leoujo/takestay`
 
-## Frontend Application
+## Frontend folder
 
 ### Requirements
 
 - Node 14.19.3
 
-### 1. Add .env file for the frontend
+### 1. Add .env file
 
 ### 2. Install node modules
 
 `npm install`
 
-### 3. Just run the project :)
+### 3. Run the project :)
 
 `npm install`
 
-## Backend Application
+## Backend folder
 
 ### Requirements
 
 - Python 3.10
 
-### 1. Add .env file for the backend
+### 1. Add .env file
 
 ### 2. Create a virtual environment to run the project and activate it
 
@@ -37,6 +37,6 @@
 
 `pip install -r requirements.txt`
 
-### 4. Run the project now :)
+### 4. Run the project :)
 
 `python manage.py runserver`
