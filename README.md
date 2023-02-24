@@ -12,7 +12,7 @@
 
 ### UX & UX
 
-- [Figma] (https://www.figma.com/login) - Interface design tool used to create user interfaces and prototypes designs.
+- [Figma] (https://www.figma.com/login) - Tool used to create user interfaces and prototypes designs.
 
 ### Frontend
 
