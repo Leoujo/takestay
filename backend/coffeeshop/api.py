@@ -2,7 +2,7 @@ from ninja import Router, ModelSchema, Schema
 from .models import Coffeeshop, Category, Item
 from owner.models import Owner
 from django.shortcuts import get_object_or_404
-
+from typing import List
 
 router = Router()
 
@@ -30,7 +30,7 @@ def create_item(request, categoryId, payload: ItemSchema):
 
 
 # Get all items within a category
-@router.get("/items/{categoryId}", response=list[ItemSchema])
+@router.get("/items/{categoryId}", response=List[ItemSchema])
 def create_category(request, categoryId):
     print("--> Looking for all items in a specific category")
     items = Item.objects.filter(category__id=categoryId)
@@ -49,14 +49,14 @@ class CreateCategorySchema(ModelSchema):
 class NestedCategorySchema(Schema):
     name: str
     id: int
-    items: list[ItemSchema]
+    items: List[ItemSchema]
 
 
 # Here I'm showing the complete category object, and not just the id.
 class NestedCoffeeshopSchema(Schema):
     name: str
     owner_id: str
-    categories: list[NestedCategorySchema]
+    categories: List[NestedCategorySchema]
 
 
 class CoffeeshopSchema(ModelSchema):
@@ -73,7 +73,7 @@ class CreateCoffeeshopSchema(Schema):
 #  COFFEE SHOP ---------------------------------------------------------------------------
 
 # Get one coffee shop by owner id
-@router.get("/{userId}", response=list[NestedCoffeeshopSchema])
+@router.get("/{userId}", response=List[NestedCoffeeshopSchema])
 def get_single_coffeeshop(request, userId):
     print("--> Searching coffeeshop")
     coffeeshop = Coffeeshop.objects.filter(owner__id=userId)
@@ -81,7 +81,7 @@ def get_single_coffeeshop(request, userId):
 
 
 # Get all coffee shops
-@router.get("/", response=list[NestedCoffeeshopSchema])
+@router.get("/", response=List[NestedCoffeeshopSchema])
 def get_all_coffeeshops(request):
     print("--> Searching all coffee shops")
     coffee_shops = Coffeeshop.objects.all()
