@@ -10,7 +10,7 @@
 
 - Node 14.19.3
 
-### 1. Add .env file
+### 1. Add .env file (create based on the .env.template folder)
 
 ### 2. Install node modules
 
@@ -26,7 +26,7 @@
 
 - Python 3.10
 
-### 1. Add .env file
+### 1. Add .env file (create based on the .env.template folder)
 
 ### 2. Create a virtual environment to run the project and activate it
 
