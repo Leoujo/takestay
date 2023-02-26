@@ -1,10 +1,9 @@
-from pathlib import Path
-import os
-
 # BASE_DIR = Path(__file__).resolve().parent.parent
+from decouple import config
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-nh8uem6aef+xx_fwal+-j20m#9xjzykjsqh)oa+3^u*d5m#4-%"
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,7 +39,7 @@ MIDDLEWARE = [
 
 # CORS CONFIG
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
+    config("REACT_APP_BASE_URL"),
 ]
 CORS_ALLOW_METHODS = ["GET", "POST", "DELETE"]
 CORS_ALLOW_HEADERS = ["Content-Type"]
@@ -71,25 +70,13 @@ WSGI_APPLICATION = "setup.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 # LOCALHOST
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "takestay",
-#         "USER": "postgres",
-#         "PASSWORD": "postgres",
-#         "HOST": "localhost",
-#     }
-# }
-
-# PRODUCTION
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "railway",
+        "NAME": "takestay",
         "USER": "postgres",
-        "PASSWORD": "WFcTy4xPJJUkHj9XGSI5",
-        "HOST": "containers-us-west-49.railway.app",
-        "PORT": "8004",
+        "PASSWORD": "postgres",
+        "HOST": "localhost",
     }
 }
 
