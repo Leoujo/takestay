@@ -45,7 +45,7 @@ export const MenuList: React.FC<Props> = ({ refetch, categoryId }) => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClose = () => {
     setAnchorEl(null);
   };
 
@@ -87,7 +87,7 @@ export const MenuList: React.FC<Props> = ({ refetch, categoryId }) => {
           </Button>
         </MenuItem>
         <MenuItem>
-          <FormDialog type="item" refetch={refetch} categoryId={categoryId} />
+          <FormDialog type="item" refetch={refetch} handleCloseToolBar={handleClose} categoryId={categoryId} />
         </MenuItem>
       </Menu>
     </>

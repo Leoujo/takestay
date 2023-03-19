@@ -46,9 +46,6 @@ export const CoffeeShopProfile: React.FC<Props> = ({ coffeeShop, refetch, isPubl
             <Typography color="primary" variant="h5">
               {coffeeShop.name}
             </Typography>
-            {/* <Typography variant="body2" color="grey">
-              By {ownerName}
-            </Typography> */}
           </Box>
         </RowContainer>
         {iconHandler()}

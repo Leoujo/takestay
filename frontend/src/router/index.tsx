@@ -19,7 +19,7 @@ export const Router = () => {
   const {
     data: coffeeShops,
     refetch: coffeeShopsRefetch,
-    isFetching: coffeeShopsIsFetching,
+    isLoading: coffeeShopsIsFetching,
   } = useQuery(["allCoffeeShops"], (): Promise<CoffeeShop[]> => getAllCoffeeShops(), {
     retry: false,
   });
@@ -28,10 +28,9 @@ export const Router = () => {
   const {
     data: coffeeShopByOwner,
     refetch: coffeeShopByOwnerRefetch,
-    isFetching: coffeeShopByOwnerIsFetching,
+    isLoading: coffeeShopByOwnerIsFetching,
   } = useQuery(["CoffeeShopByOwner"], (): Promise<CoffeeShop> => getCoffeeShop(user.id), {
-    retry: !!user.id,
-    enabled: false,
+    retry: false,
   });
 
   return (
