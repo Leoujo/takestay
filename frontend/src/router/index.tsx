@@ -12,8 +12,7 @@ import { RootState } from "../store/store";
 
 export const Router = () => {
   const { user } = useSelector((state: RootState) => state);
-
-  //   const navigate = useNavigate();
+  __;
 
   // Get all coffee shops
   const {
