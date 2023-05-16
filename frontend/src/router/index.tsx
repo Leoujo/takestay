@@ -12,7 +12,6 @@ import { RootState } from "../store/store";
 
 export const Router = () => {
   const { user } = useSelector((state: RootState) => state);
-  __;
 
   // Get all coffee shops
   const {
