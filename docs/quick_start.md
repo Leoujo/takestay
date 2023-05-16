@@ -18,7 +18,7 @@
 
 ### 3. Run the project :)
 
-`npm install`
+`npm start`
 
 ## Backend folder
 
@@ -38,5 +38,9 @@
 `pip install -r requirements.txt`
 
 ### 4. Run the project :)
+
+### Extra: For the next times just ran
+
+`bash run.sh`
 
 `python manage.py runserver`
