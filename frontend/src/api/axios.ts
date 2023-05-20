@@ -9,5 +9,3 @@ export const axiosClient = axios.create({
     "Content-Type": "application/json",
   },
 });
-
-// Use interceptors to pass the token here.
