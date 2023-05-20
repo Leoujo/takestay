@@ -33,4 +33,4 @@
 
 ## Documentation content
 
-- [Quick Start] (docs/quick_start.md#LOCAL-SETUP)
+- [Quick Start] [a link](https://github.com/Leoujo/takestay/blob/develop/docs/quick_start.md)
