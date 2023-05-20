@@ -12,7 +12,7 @@
 
 ### UX & UX
 
-- [Figma] (https://help.figma.com/hc/en-us) - Tool used to create user interfaces and prototypes designs.
+- [Figma](https://help.figma.com/hc/en-us) - Tool used to create user interfaces and prototypes designs.
 
 ### Frontend
 
