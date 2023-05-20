@@ -33,4 +33,4 @@
 
 ## Documentation content
 
-- [Quick Start] (docs/quick_start.md)
+- [Quick Start] (docs/quick_start.md#LOCAL-SETUP)
