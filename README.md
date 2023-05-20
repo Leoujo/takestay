@@ -26,6 +26,7 @@
 - [Python 3.10](https://docs.python.org/3.10/)
 - [Django Ninja](https://django-ninja.rest-framework.com/) - API building framework.
 - [PostgreSQL](https://www.postgresql.org/docs/current/) - Relational database system.
+- [Docker](https://www.docker.com/) - Software platform that allows to run applications in isolated environments called containers.
 
 ## Contributor Roles
 
