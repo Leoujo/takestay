@@ -6,10 +6,8 @@ services:
     image: postgres
     # Use to define the restart policy if the service stops or exits.
     restart: always
-    environment:
-      - POSTGRESS_DB=postgres
-      - POSTGRESS_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - ./backend/.env
 
   adminer:
     image: adminer
