@@ -4,22 +4,25 @@ import { NoCoffeeShop } from "./components/NoCoffeeShop";
 import { PageSkeleton } from "../../common/components/PageSkeleton/index";
 import { Container } from "@mui/system";
 import { CoffeeShop } from "../../common/models";
+import { useQuery } from "react-query";
+import { getCoffeeShop } from "../../api/services/coffeeshops";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
-interface Props {
-  coffeeShop?: CoffeeShop;
-  isFetching: boolean;
-  refetch: () => void;
-  isPublic?: boolean;
-}
+export const Menu: React.FC = () => {
+  const { user } = useSelector((state: RootState) => state);
 
-export const Menu: React.FC<Props> = ({ coffeeShop, isFetching, refetch, isPublic }) => {
+  // Get coffee shop by a owner
+  const { data, refetch, isFetching, isLoading } = useQuery(["CoffeeShopByOwner"], (): Promise<CoffeeShop> => getCoffeeShop(user.id), {
+    retry: false,
+  });
   if (isFetching) {
     return <PageSkeleton />;
   }
 
   const pageStateHandler = () => {
-    if (coffeeShop) {
-      return <CoffeeShopProfile isPublic={isPublic} coffeeShop={coffeeShop} refetch={refetch} />;
+    if (data) {
+      return <CoffeeShopProfile isPublic={false} coffeeShop={data} refetch={refetch} />;
     } else {
       return <NoCoffeeShop refetch={refetch} />;
     }
@@ -27,7 +30,7 @@ export const Menu: React.FC<Props> = ({ coffeeShop, isFetching, refetch, isPubli
 
   return (
     <>
-      <Navbar isPublic={isPublic} />
+      <Navbar isPublic={false} />
       <Container maxWidth="sm">{pageStateHandler()}</Container>
     </>
   );

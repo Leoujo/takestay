@@ -24,6 +24,7 @@ export const MenuDrawer: React.FC = () => {
   const logOutHandler = () => {
     navigate("/");
     dispatch(resetOwner());
+    localStorage.removeItem("token");
   };
 
   return (

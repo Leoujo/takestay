@@ -24,6 +24,7 @@ export const GoogleAuthButton = () => {
   };
 
   const onSuccessGoogleLogin = (data: any) => {
+    localStorage.setItem("token", data.credential);
     const decodedCredential = jwtDecode(data.credential);
     mutateAsync(decodedCredential);
   };

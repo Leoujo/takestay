@@ -18,25 +18,17 @@
 
 ### 3. Run the project :)
 
-`npm install`
+`npm start`
 
 ## Backend folder
 
 ### Requirements
 
-- Python 3.10
+- Docker 20.10.20
 
 ### 1. Add .env file (create based on the .env.template folder)
 
 ### 2. Create a virtual environment to run the project and activate it
 
-`virtualenv venv`
-`source venv/bin/activate`
-
-### 3. Download everything from the requirements file in the virtual environment
-
-`pip install -r requirements.txt`
-
-### 4. Run the project :)
-
-`python manage.py runserver`
+`docker-compose up`
+`docker-compose build`

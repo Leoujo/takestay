@@ -20,7 +20,7 @@ interface Props {
 
 export const CategoryCard: React.FC<Props> = ({ isEditable, category, refetch, isPublic }) => {
   // If is not on edit mode, expand is initially true for all categories.
-  const [expanded, setExpanded] = useState(isPublic);
+  const [expanded, setExpanded] = useState(isPublic ? isPublic : false);
   const handleChange = () => {
     setExpanded(!expanded);
   };

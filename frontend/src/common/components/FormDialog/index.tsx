@@ -20,6 +20,7 @@ interface Props {
   type: "coffeeShop" | "category" | "item";
   categoryId?: number;
   refetch: () => void;
+  handleCloseToolBar?: () => void;
 }
 
 const schema = yup.object().shape({
@@ -28,7 +29,7 @@ const schema = yup.object().shape({
   price: yup.number(),
 });
 
-export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
+export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId, handleCloseToolBar }) => {
   const [open, setOpen] = React.useState(type === "coffeeShop");
 
   const {
@@ -43,16 +44,23 @@ export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
   const { id: ownerId } = useSelector((state: RootState) => state.user);
 
   const { mutate: mutateCoffeeShop, isLoading: loadingCoffeeShop } = useMutation(() => createCoffeeShop(getValues("name"), ownerId), {
-    onSuccess: () => refetch(),
+    onSuccess: () => onSuccessHandler(),
   });
 
   const { mutate: mutateCategory, isLoading: loadingCategory } = useMutation(() => createCategory(getValues("name"), ownerId), {
-    onSuccess: () => refetch(),
+    onSuccess: () => onSuccessHandler(),
   });
 
   const { mutate: mutateItem, isLoading: loadingItem } = useMutation(() => createItem(getValues(), categoryId), {
-    onSuccess: () => refetch(),
+    onSuccess: () => onSuccessHandler(),
   });
+
+  // After an item/category/coffeeshop is added, must reload component and close dialog.
+  const onSuccessHandler = () => {
+    refetch();
+    handleClose();
+    handleCloseToolBar?.();
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -106,7 +114,7 @@ export const FormDialog: React.FC<Props> = ({ type, refetch, categoryId }) => {
                 />
                 <TextField
                   {...register("price")}
-                  label="Price"
+                  label="Price $"
                   margin="dense"
                   variant="outlined"
                   onKeyDown={(event) => {

@@ -1,0 +1,27 @@
+# Docker compose version
+version: "3"
+services:
+  # PostgreSQL image
+  db:
+    image: postgres
+    # Use to define the restart policy if the service stops or exits.
+    restart: always
+    environment:
+      - POSTGRESS_DB=postgres
+      - POSTGRESS_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  # Django ninja customized image
+  web:
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
