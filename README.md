@@ -6,13 +6,13 @@
 
 ## Summary
 
-**Take Stay** is an innovative platform that offers coffee shop owners an exceptional way to create a complete menu for their business and provide their customers with an effortless ordering experience. With Take Stay, coffee shop owners can easily design their menu, update it on the go, and share a QR code that customers can scan to access the menu from their mobile devices.
+**Take Stay** is a platform that offers coffee shop owners an exceptional way to create a complete menu for their business and provide their customers with an effortless ordering experience. With Take Stay, coffee shop owners can easily design their menu, update it on the go, and share a QR code that customers can scan to access the menu from their mobile devices.
 
 ## Project Stack
 
 ### UX & UX
 
-- [Figma] (https://www.figma.com/login) - Tool used to create user interfaces and prototypes designs.
+- [Figma] (https://help.figma.com/hc/en-us) - Tool used to create user interfaces and prototypes designs.
 
 ### Frontend
 
@@ -33,4 +33,5 @@
 
 ## Documentation content
 
-- [Quick Start] (docs/quick_start.md)
+- [Quick start](https://github.com/Leoujo/takestay/blob/develop/docs/quick_start.md)
+- [Figma draft](https://www.figma.com/file/NtJiiYsv1FcYBArN0BeIXC/take-stay-refactored?type=design&node-id=0%3A1&t=RxLt33fg6GlitBcp-1)

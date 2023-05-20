@@ -1,4 +1,4 @@
-# Local Setup
+# LOCAL SETUP
 
 ### Clone repository
 
