@@ -33,4 +33,4 @@
 
 ## Documentation content
 
-- [Quick Start] [a link](https://github.com/Leoujo/takestay/blob/develop/docs/quick_start.md)
+- [Quick Start](https://github.com/Leoujo/takestay/blob/develop/docs/quick_start.md)
