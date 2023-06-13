@@ -33,5 +33,4 @@
 
 ## Documentation content
 
-- [Quick start](https://github.com/Leoujo/takestay/blob/develop/docs/quick_start.md)
-- [Figma draft](https://www.figma.com/file/NtJiiYsv1FcYBArN0BeIXC/take-stay-refactored?type=design&node-id=0%3A1&t=RxLt33fg6GlitBcp-1)
+- [Quick start](https://github.com/Leoujo/takestay/blob/main/docs/quick_start.md)
